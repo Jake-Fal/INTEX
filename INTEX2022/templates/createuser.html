@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method="post" action="/submitchanges/{{data.data.id}}">
+        {% csrf_token %}
+        First Name: <input type="text" name="lName"/><br/>
+        Last Name: <input type="text" name="fName"/><br/>
+        Username: <input type="text" name="username"/><br/>
+        Password: <input type="password" name="password"/><br/>
+        Birthdate: <input type="date" value="{{ data.data.Artist }}" name="Artist"/><br/>
+        Weight: <input type="number" name="Weight"/><br/>
+        Height: <input type="number" name="Feet"/><input type="number" name="Inches"/><br/>
+        Gender: <select id="gender" name="gender">
+            <option value="female">Female</option>
+            <option value="male">Male</option>
+        </select>
+        <input type="submit"/>
+    </form>
+    
+</body>
+</html>
