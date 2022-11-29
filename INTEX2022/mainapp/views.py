@@ -1,4 +1,7 @@
-from django.shortcuts import render
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render, redirect
+import json
+import requests
 
 # Create your views here.
 def indexPageView(request) :
@@ -21,3 +24,17 @@ def dashboardPageView(request) :
 
 def navView(request):
     return render( request, 'nav.html')
+
+def apiTest(request):
+    nutrients = ['Protein', 'Sodium, Na', 'Potassium, K', 'Water', 'Phosphorus, P']
+    foodInfo = {}
+    r = requests.get('https://api.nal.usda.gov/fdc/v1/foods/search?api_key=ZG2gfG4lRbZh0UXSFos1GvXbvUrvjsdYX7kYBdVI&query=Cheddar%20Cheese')
+    for i in r.json()['foods']:
+        nuts = {}
+        name = i['description'].lower()
+        for j in i['foodNutrients']:
+            if j['nutrientName'] in nutrients:
+                nuts[j['nutrientName']] = j['value']
+        foodInfo[name] = nuts
+    print(foodInfo)
+    return HttpResponse('Hello')
