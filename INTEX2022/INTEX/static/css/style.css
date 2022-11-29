@@ -952,6 +952,10 @@ Overwrite some FlexSlider styles
       .flexslider .flex-control-nav li a.flex-active {
         background: #53a0b3; }
 
+/* added code */
+
+
+
 /*$col-2-width:   2/12*100%;
 $col-1-width:   1/12*100%;
 @mixin border-radius($radius: 4px) {

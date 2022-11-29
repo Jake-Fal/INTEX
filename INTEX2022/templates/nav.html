@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
 
     <link href='http://fonts.googleapis.com/css?family=Bree+Serif|Pacifico' rel='stylesheet' type='text/css' />
-
+    <link rel="icon" type="image/x-icon" href="{% static 'img/apple-touch-icon-precomposed.png' %}">
   </head>
   <body>
 
@@ -31,22 +31,12 @@
           <nav class="main-nav">
             <ul>
               <!-- need to reroute each of these -->
-              <li><a class="current" href="index.html">Dashboard</a></li>
-              <li><a href="reviews.html">Journal</a></li>
-              <li><a href="buy-it-now.html">Profile</a></li>
+              <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+              <li><a href="{% url 'journal' %}">Journal</a></li>
+              <li><a href="{% url 'profile' %}">Profile</a></li>
             </ul>
           </nav>
-        </div>
-        <div class="columns col-12">
-          <div class="social-links">
-            <a href="#" title="Like us on Facebook">
-              <i class="fa fa-facebook"></i>
-            </a>
-            <a href="#" title="Follow us on Twitter">
-              <i class="fa fa-twitter"></i>
-            </a>
-          </div>
-        </div>        
+        </div>      
       </div>
     </aside>
     <!-- end: off canvas area -->
@@ -59,7 +49,7 @@
         <div class="row max-inner">
           <div class="columns col-3">
             <a href="#" class="toggle-off-canvas"><i class="fa fa-bars"></i></a>
-            <a href="index.html" class="logo">
+            <a href="{% url 'dashboard' %}" class="logo">
               <span class="highlight-color">Kidney</span>health
             </a>
           </div>
@@ -67,21 +57,11 @@
             <nav class="main-nav">
               <ul>
                 <!-- need to reroute each of these -->
-              <li><a class="current" href="index.html">Dashboard</a></li>
-              <li><a href="reviews.html">Journal</a></li>
-              <li><a href="buy-it-now.html">Profile</a></li>
+                <li><a class="current" href="{% url 'dashboard' %}">Dashboard</a></li>
+                <li><a href="{% url 'journal' %}">Journal</a></li>
+                <li><a href="{% url 'profile' %}">Profile</a></li>
               </ul>
             </nav>
-          </div>
-          <div class="columns col-2">
-            <div class="social-links">
-              <a href="#" title="Like us on Facebook">
-                <i class="fa fa-facebook"></i>
-              </a>
-              <a href="#" title="Follow us on Twitter">
-                <i class="fa fa-twitter"></i>
-              </a>
-            </div>
           </div>
         </div>
       </header>
@@ -97,7 +77,7 @@
             <div class="columns col-3">
               <h3>Contact</h3>
               <p>
-                123 address Drive<br />
+                123 Address Drive<br />
                 Provo<br />
                 Utah
                 <br /><br />
@@ -112,13 +92,7 @@
                 <a href="#">support@email.com</a>
               </p>
             </div>
-            <div class="columns col-3">
-              <h3>Newsletter</h3>
-              <form>
-                <input placeholder="Email Address..." type="text">
-                <input type="submit" value="Subscribe" class="submit">
-              </form>
-            </div>
+            
           </div>
         </div>
         <div class="row copyright">
