@@ -18,3 +18,6 @@ def createuserPageView(request) :
 
 def dashboardPageView(request) :
     return render( request, 'dashboard.html')
+
+def navView(request):
+    return render( request, 'nav.html')
