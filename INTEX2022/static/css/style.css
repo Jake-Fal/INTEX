@@ -954,8 +954,8 @@ Overwrite some FlexSlider styles
 
 /* added code */
 .main-margins {
-  padding-top: 200px;
-  padding-left: 300px;
+  padding-top: 100px;
+  padding-left: 100px;
   padding-bottom: 200px;
 }
 
