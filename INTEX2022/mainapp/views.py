@@ -1,8 +1,10 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
+
 from .forms import ActualsForm
 from .models import Actuals
 import pandas as pd
+
 import json
 import requests
 
@@ -13,6 +15,9 @@ def indexPageView(request) :
 def journalPageView(request) :
     return render( request, 'journal.html')
 
+def displayjournalPageView(request) :
+    return render( request, 'displayjournal.html')
+
 def loginPageView(request) :
     return render( request, 'login.html')
 
@@ -21,6 +26,10 @@ def profilePageView(request) :
 
 def createuserPageView(request) :
     return render( request, 'createuser.html')
+
+
+def dashboardPageView2(request) :
+    return render( request, 'dashboard.html')
 
 def dashboardPageView(request):
     k=Actuals()
