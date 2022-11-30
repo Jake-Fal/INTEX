@@ -48,11 +48,11 @@ class Login(models.Model):
 class FoodItem(models.Model):
     UnitName = models.ForeignKey(Unit,on_delete= models.DO_NOTHING)
     FoodName = models.CharField(max_length=50, null=False)
-    Sodium_mg = models.SmallIntegerField(max_length=20, null=False)
-    Potassium_mg = models.SmallIntegerField(max_length=20, null=False)
-    Phosphate_mg = models.SmallIntegerField(max_length=20, null=False)
-    Protein_g = models.SmallIntegerField(max_length=20, null=False)
-    Water_L = models.SmallIntegerField(max_length=20, null=False)
+    Sodium_mg = models.SmallIntegerField(null=False)
+    Potassium_mg = models.SmallIntegerField(null=False)
+    Phosphate_mg = models.SmallIntegerField(null=False)
+    Protein_g = models.SmallIntegerField(null=False)
+    Water_L = models.SmallIntegerField(null=False)
     Serving_size = models.DecimalField(max_digits=5,decimal_places=2,null=False)
 
  
@@ -87,3 +87,14 @@ class WaterEntry(models.Model):
  
     def __str__(self):
         return self.DateTime
+
+class Goal(models.Model):
+    Min_Sodium_mg = models.SmallIntegerField(null=False)
+    Max_Sodium_mg = models.SmallIntegerField(null=False)
+    Min_Potassium_mg = models.SmallIntegerField(null=False)
+    Max_Potassium_mg = models.SmallIntegerField(null=False)
+    Min_Phosphate_mg = models.SmallIntegerField(null=False)
+    Max_Phosphate_mg = models.SmallIntegerField(null=False)
+    Protein_g = models.SmallIntegerField(null=False)
+    M_Water_L = models.SmallIntegerField(null=False)
+    F_Water_L = models.SmallIntegerField(null=False)

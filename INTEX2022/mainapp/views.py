@@ -1,6 +1,7 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
-#from .forms import MovieDataForm
+from .forms import GoalForm
+from .models import Goal
 import json
 import requests
 
@@ -20,20 +21,20 @@ def profilePageView(request) :
 def createuserPageView(request) :
     return render( request, 'createuser.html')
 
-# def dashboardPageView(request):
-#     data = User.objects.all()
-#     if request.method == 'POST':
-#         form = MovieDataForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('/')
-#     else:
-#         form = MovieDataForm()
-#     context = {
-#         'data': data,
-#         'form': form,
-#     }
-#     return render(request, 'dashboard.html', context)
+def dashboardPageView(request):
+     data = Goal.objects.all()
+     if request.method == 'POST':
+         form = GoalForm(request.POST)
+         if form.is_valid():
+             form.save()
+             return redirect('/')
+     else:
+         form = GoalForm()
+     context = {
+         'data': data,
+         'form': form,
+     }
+     return render(request, 'dashboard.html', context)
 
 def navView(request):
     return render( request, 'nav.html')
