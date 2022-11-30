@@ -5,27 +5,19 @@
 <canvas id="aChart" width="4" height="3"></canvas>
 
 <body>
-    <form method="post" action="/submitchanges/{{data.data.id}}">
+    <form method="post" action="/addentry/">
         {% csrf_token %}
         Date: <input type="date" name="EntryDate"/><br/>
-        Meal: <select id="mealtype" name="mealtype">
-            <option value="breakfast">Breakfast</option>
-            <option value="lunch">Lunch</option>
-            <option value="snack">Snack</option>
-            <option value="dinner">Dinner</option>
-        <br/>
-        Food Item: <input type="search" name="food"/><br/>
-        <a>Add New Food Item</a>
-        Quantity: <input type="text" name="quantity"/><br/>
-        Unit: <select id="unit" name="unit"/>
-            <option value="gram">gram(s)</option>
-            <option value="cup">cup(s)</option>
-            <option value="slice">slice(s)</option>
-            <option value="bowl">bowl(s)</option>
-            <option value="plate">plate(s)</option>
-            <option value="bag">bag(s)</option>
-            <option value="piece">piece(s)</option>
-            <option value="serving">serving(s)</option><br/>
+        Meal: <select name="meal" id="mealClass">
+            {% for i in meals %}
+                <option value="{{i}}">{{i}}</option>
+            {% endfor %}
+        </select><br/>
+        <input type='hidden' id='foodID' name="foodID"/>
+        Food Item: <input type="search" name="food" id="searchfood" hx-get="searchfood/" hx-trigger="keyup" hx-target="#results"/><br/>
+        <div id='results'></div>
+        <a>Add New Food Item</a><br/>
+        Number of Servings: <input type='number' name="servings" value="0" min="0" max="10"/>
         <input type="submit"/>
     </form>
     <div>
@@ -69,3 +61,4 @@
     </div>
 </body>
 {% endblock %}
+
