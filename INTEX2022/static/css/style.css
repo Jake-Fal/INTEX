@@ -955,8 +955,14 @@ Overwrite some FlexSlider styles
 /* added code */
 .main-margins {
   padding-top: 100px;
-  padding-left: 100px;
+  padding-left: 300px;
+  padding-right: 300px;
   padding-bottom: 200px;
+}
+
+/* button */
+.entrybutton {
+  width: 200px;
 }
 
 

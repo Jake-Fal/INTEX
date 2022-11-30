@@ -1,6 +1,5 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
-#from .forms import MovieDataForm
 import json
 import requests
 
@@ -11,6 +10,9 @@ def indexPageView(request) :
 def journalPageView(request) :
     return render( request, 'journal.html')
 
+def displayjournalPageView(request) :
+    return render( request, 'displayjournal.html')
+
 def loginPageView(request) :
     return render( request, 'login.html')
 
@@ -20,20 +22,8 @@ def profilePageView(request) :
 def createuserPageView(request) :
     return render( request, 'createuser.html')
 
-# def dashboardPageView(request):
-#     data = User.objects.all()
-#     if request.method == 'POST':
-#         form = MovieDataForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('/')
-#     else:
-#         form = MovieDataForm()
-#     context = {
-#         'data': data,
-#         'form': form,
-#     }
-#     return render(request, 'dashboard.html', context)
+def dashboardPageView(request) :
+    return render( request, 'dashboard.html')
 
 def navView(request):
     return render( request, 'nav.html')
