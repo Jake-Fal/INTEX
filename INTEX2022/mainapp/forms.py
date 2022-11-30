@@ -1,7 +1,7 @@
 from django import forms
-from .models import Goal
+from .models import Actuals
  
-class GoalForm(forms.ModelForm):
+class ActualsForm(forms.ModelForm):
      class Meta:
-         model = Goal
+         model = Actuals
          fields = '__all__'

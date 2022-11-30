@@ -1,7 +1,7 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
-from .forms import GoalForm
-from .models import Goal
+from .forms import ActualsForm
+from .models import Actuals
 import pandas as pd
 import json
 import requests
@@ -23,7 +23,7 @@ def createuserPageView(request) :
     return render( request, 'createuser.html')
 
 def dashboardPageView(request):
-    k=Goal()
+    k=Actuals()
     data = {}
     for attr, value in k.__dict__.items():
         print(attr, value)
@@ -37,12 +37,12 @@ def dashboardPageView(request):
     #     print(data)
     
     if request.method == 'POST':
-         form = GoalForm(request.POST)
+         form = ActualsForm(request.POST)
          if form.is_valid():
              form.save()
              return redirect('/')
     else:
-         form = GoalForm()
+         form = ActualsForm()
     context = {
          'data': data,
          'form': form,
