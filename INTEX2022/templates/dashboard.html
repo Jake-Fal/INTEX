@@ -25,10 +25,10 @@ const ctx = document.getElementById('myChart').getContext('2d');
 const myChart = new Chart(ctx, {
     type: 'bar',
     data:  {
-        labels:  [{% for data in data %} '{{data.movie}}', {% endfor %}],
+        labels:  [{%for data in data%} '{{data.goal}}', {%endfor%}],
         datasets: [{
-            label: '# of Votes',
-            data: [{% for data in data %} {{data.domesticBoxOffice}}, {% endfor %}],
+            label: 'Daily Nutrient Goals',
+            data: [{% for data in data %} {{data.goal}}, {% endfor %}],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
