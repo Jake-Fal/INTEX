@@ -4,19 +4,7 @@
 {% block title %} Dashboard {% endblock %}
 {% block content %}
 
-<div class = "row mt-3 pt-3">
-    <div class = "col-md-4">
-        <div class = "border p-3 shadow">
-            <h4>Add Data</h4>
-            <hr>
-            <form method="POST">
-                {% csrf_token %}
-                {{ form }}
-                <input class = 'btn btn-success btn-block' type='submit' value = 'Add'>
-            </form>
-        </div>
-    </div>
-    <div class = "col-md-8">
+
         <!--chart will go here later-->
         <canvas id="myChart" width="40" height="30"></canvas>
         <canvas id="yChart" width="40" height="30"></canvas>
