@@ -953,8 +953,10 @@ Overwrite some FlexSlider styles
         background: #53a0b3; }
 
 /* added code */
-div.login-page {
-  margin-left: 100px;
+.main-margins {
+  padding-top: 100px;
+  padding-left: 100px;
+  padding-bottom: 200px;
 }
 
 

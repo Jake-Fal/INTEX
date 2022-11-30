@@ -953,6 +953,11 @@ Overwrite some FlexSlider styles
         background: #53a0b3; }
 
 /* added code */
+.main-margins {
+  padding-top: 200px;
+  padding-left: 300px;
+  padding-bottom: 200px;
+}
 
 
 
