@@ -26,7 +26,7 @@ def searchFoodView(request):
     return render(request, 'searchresults.html', context)
 
 def getAPIList(request):
-    getList(200)
+    #getList(200)
     return HttpResponse('data')
 
 def journalPageView(request) :
@@ -38,7 +38,6 @@ def journalPageView(request) :
 
 def addFoodEntry(request):
     allFoods = list(FoodItem.objects.values_list('fdic', flat=True))
-    unit = list(Unit.objects.values_list('UnitName', flat=True))
 
     
     return HttpResponse('Added')
