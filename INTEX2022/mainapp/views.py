@@ -1,6 +1,6 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
-from .funcs import callAPI
+from .funcs import searchAPI
 from .models import MealClass
 
 
@@ -11,7 +11,7 @@ def indexPageView(request) :
 def searchFoodView(request):
     foods = []
     food = request.GET['food']
-    data = callAPI(food)
+    data = searchAPI(food)
     for i in data:
         foods.append({
             'name':i['name'],
