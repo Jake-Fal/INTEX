@@ -6,8 +6,6 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
   <head>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
@@ -26,28 +24,7 @@
   </head>
   <body>
 
-    <!-- start: off canvas area -->
-    <aside class="off-canvas">
-      <div class="row">
-        <div class="columns col-17">
-          <nav class="main-nav">
-            <ul>
-              <!-- need to reroute each of these -->
-<<<<<<< HEAD
-              <li><a class="current" href="{% url 'dashboard' %}" >Dashboard</a></li>
-=======
-
-              <li><a class="current" >Dashboard</a></li>
->>>>>>> fb4e77d18ba6f921ceb4a361b0f6bfa0acc81f6c
-              <li><a href="reviews.html">Journal</a></li>
-              <li><a href="buy-it-now.html">Profile</a></li>
-
-            </ul>
-          </nav>
-        </div>      
-      </div>
-    </aside>
-    <!-- end: off canvas area -->
+ 
 
     <!-- start: ON canvas area -->
     <div class="on-canvas">
@@ -57,25 +34,9 @@
         <div class="row max-inner">
           <div class="columns col-3">
             <a href="#" class="toggle-off-canvas"><i class="fa fa-bars"></i></a>
-            <a href="{% url 'dashboard' %}" class="logo">
+            <a href="{% url 'index' %}" class="logo">
               <span class="highlight-color">Kidney</span>health
             </a>
-          </div>
-          <div class="columns col-7">
-            <nav class="main-nav">
-              <ul>
-                <!-- need to reroute each of these -->
-<<<<<<< HEAD
-              <li><a class="current" href="{% url 'dashboard' %}">Dashboard</a></li>
-=======
-
-              <li><a class="current">Dashboard</a></li>
->>>>>>> fb4e77d18ba6f921ceb4a361b0f6bfa0acc81f6c
-              <li><a href="reviews.html">Journal</a></li>
-              <li><a href="buy-it-now.html">Profile</a></li>
-
-              </ul>
-            </nav>
           </div>
         </div>
       </header>
@@ -122,17 +83,17 @@
     </div>
 
 
-    {% comment %} <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.js"></script> {% endcomment %}
-    {% comment %} <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.js"><\/script>')</script> {% endcomment %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.js"></script>
+    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.js"><\/script>')</script>
 
-    {% comment %} <script src="js/plugins.js"></script>
-    <script src="js/main.js"></script> {% endcomment %}
+    <script src="js/plugins.js"></script>
+    <script src="js/main.js"></script>
 
-    {% comment %} <script>
+    <script>
       var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
       (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
       g.src='//www.google-analytics.com/ga.js';
       s.parentNode.insertBefore(g,s)}(document,'script'));
-    </script> {% endcomment %}
+    </script>
   </body>
 </html>
