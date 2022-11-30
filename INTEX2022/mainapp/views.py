@@ -1,19 +1,47 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
-
+from .funcs import searchAPI, getById, getList
+from .models import MealClass, FoodItem, FoodEntry, Unit
 from .forms import ActualsForm
 from .models import Actuals
 import pandas as pd
 
-import json
-import requests
 
 # Create your views here.
 def indexPageView(request) :
     return render( request, 'index.html')
 
+def searchFoodView(request):
+    foods = []
+    food = request.GET['food']
+    data = FoodItem.objects.filter(FoodName__contains=food).distinct('FoodName')[:5]
+    for i in data:
+        foods.append({
+            'name':str(i.FoodName),
+            'id':i.id
+        })
+    context = {
+        'foods':foods
+    }
+    return render(request, 'searchresults.html', context)
+
+def getAPIList(request):
+    return HttpResponse('data')
+
 def journalPageView(request) :
-    return render( request, 'journal.html')
+    meals = MealClass.objects.all()
+    context = {
+        'meals':meals,
+    }
+    return render( request, 'journal.html', context)
+
+def addFoodEntry(request):
+    allFoods = list(FoodItem.objects.values_list('fdic', flat=True))
+    unit = list(Unit.objects.values_list('UnitName', flat=True))
+
+    
+    return HttpResponse('Added')
+
 
 def displayjournalPageView(request) :
     return render( request, 'displayjournal.html')
@@ -60,17 +88,3 @@ def dashboardPageView(request):
 
 def navView(request):
     return render( request, 'nav.html')
-
-def apiTest(request):
-    nutrients = ['Protein', 'Sodium, Na', 'Potassium, K', 'Water', 'Phosphorus, P']
-    foodInfo = {}
-    r = requests.get('https://api.nal.usda.gov/fdc/v1/foods/search?api_key=ZG2gfG4lRbZh0UXSFos1GvXbvUrvjsdYX7kYBdVI&query=Cheddar%20Cheese')
-    for i in r.json()['foods']:
-        nuts = {}
-        name = i['description'].lower()
-        for j in i['foodNutrients']:
-            if j['nutrientName'] in nutrients:
-                nuts[j['nutrientName']] = j['value']
-        foodInfo[name] = nuts
-    print(foodInfo)
-    return HttpResponse('Hello')
