@@ -1,14 +1,33 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
-import json
-import requests
+from .funcs import callAPI
+from .models import MealClass
+
 
 # Create your views here.
 def indexPageView(request) :
     return render( request, 'index.html')
 
+def searchFoodView(request):
+    foods = []
+    food = request.GET['food']
+    data = callAPI(food)
+    for i in data:
+        foods.append({
+            'name':i['name'],
+            'id':i['id']
+        })
+    context = {
+        'foods':foods
+    }
+    return render(request, 'searchresults.html', context)
+
 def journalPageView(request) :
-    return render( request, 'journal.html')
+    meals = MealClass.objects.all()
+    context = {
+        'meals':meals,
+    }
+    return render( request, 'journal.html', context)
 
 def loginPageView(request) :
     return render( request, 'login.html')
@@ -24,17 +43,3 @@ def dashboardPageView(request) :
 
 def navView(request):
     return render( request, 'nav.html')
-
-def apiTest(request):
-    nutrients = ['Protein', 'Sodium, Na', 'Potassium, K', 'Water', 'Phosphorus, P']
-    foodInfo = {}
-    r = requests.get('https://api.nal.usda.gov/fdc/v1/foods/search?api_key=ZG2gfG4lRbZh0UXSFos1GvXbvUrvjsdYX7kYBdVI&query=Cheddar%20Cheese')
-    for i in r.json()['foods']:
-        nuts = {}
-        name = i['description'].lower()
-        for j in i['foodNutrients']:
-            if j['nutrientName'] in nutrients:
-                nuts[j['nutrientName']] = j['value']
-        foodInfo[name] = nuts
-    print(foodInfo)
-    return HttpResponse('Hello')
