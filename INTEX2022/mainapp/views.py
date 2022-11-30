@@ -1,9 +1,9 @@
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from .funcs import searchAPI, getById, getList
 from .models import MealClass, FoodItem, FoodEntry
-from .forms import ActualsForm
-from .models import Actuals
+from .forms import LoginForm
+from .models import Login
 import pandas as pd
 import psycopg2
 import json
@@ -50,8 +50,13 @@ def displayjournalPageView(request) :
     return render( request, 'displayjournal.html')
 
 def loginPageView(request) :
-    return render( request, 'login.html')
+    form = LoginForm
+    return render( request, 'login.html', {'form': form})
 
+def validatePage(request) :
+    return HttpResponseRedirect(dashboardPageView)
+
+    
 def profilePageView(request) :
     return render( request, 'profile.html')
 
