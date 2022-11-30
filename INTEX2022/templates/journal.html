@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Journal Entry</title>
-</head>
+{% extends 'nav.html' %}
+{% load static %}
+{% block content %}
+
 <body>
     <form method="post" action="/submitchanges/{{data.data.id}}">
         {% csrf_token %}
@@ -14,7 +10,8 @@
             <option value="breakfast">Breakfast</option>
             <option value="lunch">Lunch</option>
             <option value="snack">Snack</option>
-            <option value="dinner">Dinner</option><br/>
+            <option value="dinner">Dinner</option>
+        <br/>
         Food Item: <input type="search" name="food"/><br/>
         <a>Add New Food Item</a>
         Quantity: <input type="text" name="quantity"/><br/>
@@ -31,4 +28,4 @@
     </form>
     
 </body>
-</html>
+{% endblock %}
