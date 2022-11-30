@@ -1,7 +1,7 @@
 from django import forms
-#from .models import MovieData
+from .models import Actuals
  
-# class MovieDataForm(forms.ModelForm):
-#     class Meta:
-#         model = MovieData
-#         fields = '__all__'
+class ActualsForm(forms.ModelForm):
+     class Meta:
+         model = Actuals
+         fields = '__all__'
