@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'mainapp.apps.MainappConfig',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -74,16 +75,16 @@ WSGI_APPLICATION = 'INTEX.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME':'kidney_health',
         'USER': 'postgres',
-        'PASSWORD': 'Andyman72599',
+        'PASSWORD': 'Broncos2025',
         'HOST': 'localhost',
     }
 }
+
 
 
 # Password validation
@@ -129,3 +130,4 @@ os.path.join(BASE_DIR, 'INTEX/static')]
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

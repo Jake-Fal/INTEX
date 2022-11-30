@@ -1,18 +1,6 @@
 from django.db import models
 
 # Create your models here.
-from django.db import models
-
-# Create your models here.
-class Unit(models.Model):
-    UnitName = models.CharField(max_length=20, null=False)
- 
-    class Meta:
-        db_table = 'meal_units'
- 
-    def __str__(self):
-        return self.UnitName
-
 class MealClass(models.Model):
     MealName = models.CharField(max_length=10, null=False)
  
@@ -56,7 +44,6 @@ class FoodItem(models.Model):
     Protein_g = models.SmallIntegerField(max_length=20, null=True)
     Water_L = models.SmallIntegerField(max_length=20, null=True)
 
- 
     class Meta:
         db_table = 'food_item'
  
@@ -88,3 +75,28 @@ class WaterEntry(models.Model):
  
     def __str__(self):
         return self.DateTime
+
+class Goal(models.Model):
+    Min_Sodium_mg = models.SmallIntegerField(null=False)
+    Max_Sodium_mg = models.SmallIntegerField(null=False)
+    Min_Potassium_mg = models.SmallIntegerField(null=False)
+    Max_Potassium_mg = models.SmallIntegerField(null=False)
+    Min_Phosphorous_mg = models.SmallIntegerField(null=False)
+    Max_Phosphorous_mg = models.SmallIntegerField(null=False)
+    Protein_g = models.DecimalField(max_digits=5,decimal_places=2,null=False)
+    M_Water_L = models.DecimalField(max_digits=5,decimal_places=2,null=False)
+    F_Water_L = models.DecimalField(max_digits=5,decimal_places=2,null=False)
+
+class Actuals(models.Model):
+    UserID = models.ForeignKey(User, on_delete = models.DO_NOTHING, null=False)
+    Protein_g = models.DecimalField(max_digits=5,decimal_places=2,null=False)
+    Water_L = models.DecimalField(max_digits=5,decimal_places=2,null=False)
+    Sodium_mg = models.DecimalField(max_digits=5,decimal_places=2,null=False)
+    Potassium_mg = models.DecimalField(max_digits=5,decimal_places=2,null=False)
+    Phosphorous_mg = models.DecimalField(max_digits=5,decimal_places=2,null=False)
+ 
+    class Meta:
+        db_table = 'actuals'
+ 
+    def __str__(self):
+        return self.Phosphorous_mg, self.Potassium_mg, self.Water_L, self.Protein_g, self.Sodium_mg

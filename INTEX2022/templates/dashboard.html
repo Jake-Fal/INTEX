@@ -1,0 +1,146 @@
+
+{% extends 'nav.html'%}
+ 
+{% block title %} Dashboard {% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class = "row mt-3 pt-3">
+    <div class = "col-md-4">
+        <div class = "border p-3 shadow">
+            <h4>Add Data</h4>
+            <hr>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <input class = 'btn btn-success btn-block' type='submit' value = 'Add'>
+            </form>
+        </div>
+    </div>
+    <div class = "col-md-8">
+        <!--chart will go here later-->
+        <canvas id="myChart" width="40" height="30"></canvas>
+        <canvas id="yChart" width="40" height="30"></canvas>
+        <canvas id="aChart" width="40" height="30"></canvas>
+
+<script>
+const ctx = document.getElementById('myChart').getContext('2d');
+const myChart = new Chart(ctx, {
+    type: 'doughnut',
+    data:  {
+        labels:  ['Sodium (mg)', 'Potassium (mg)', 'Phosphorous (mg)'],
+        datasets: [{
+            label: 'Daily Nutrient Goals',
+            data: [1495, 2500, 800],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
+<script>
+    const ct = document.getElementById('yChart').getContext('2d');
+    const yChart = new Chart(ct, {
+        type: 'bar',
+        data:  {
+            labels:  ['Protein (g)', 'Water(Male, L)','Water (Female, L)'],
+            datasets: [{
+                label: '',
+                data: [0.6, 3.7, 2.7],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+<script>
+    const cta = document.getElementById('aChart').getContext('2d');
+    const aChart = new Chart(cta, {
+        type: 'bar',
+        data:  {
+            datasets: [{
+                labels:  [{% for data in data %} '{{data.actuals}}', {% endfor %}],
+                label: 'Your results',
+                data: [{% for data in data %} {{data.actuals}}, {% endfor %}],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }],
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+    </div>
+</div>
+
+
+
+
+
+
+{% endblock %}

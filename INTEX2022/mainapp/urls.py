@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import indexPageView, createuserPageView, dashboardPageView, journalPageView, loginPageView, profilePageView, navView, searchFoodView,addFoodEntry, getAPIList
+
+from .views import indexPageView, createuserPageView, dashboardPageView, journalPageView, loginPageView, profilePageView, navView, searchFoodView,addFoodEntry, getAPIList, profilePageView, dashboardPageView, displayjournalPageView
 
 
 urlpatterns = [
@@ -11,5 +12,6 @@ urlpatterns = [
     path('dashboard/', dashboardPageView, name='dashboard'),
     path('nav/', navView, name='nav'),
     path('journal/searchfood/', searchFoodView, name='searchfood'),
-    path('addentry/', getAPIList, name='addfoodentry')
+    path('addentry/', getAPIList, name='addfoodentry'),
+    path('displayjournal/', displayjournalPageView, name='displayjournal')
     ]

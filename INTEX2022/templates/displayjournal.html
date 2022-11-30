@@ -1,0 +1,26 @@
+{% extends 'nav.html' %}
+{% load static %}
+{% block content %}
+
+<div class="main-margins">
+    <h1>Journal Entries</h1>
+    <form action="../journal" class = "entrybutton">
+        <input type="submit" value="Add Food Entry" />
+    </form>
+
+    <div>
+        <p>FOOD TABLE:</p>
+        
+    </div>
+
+    <form action="" class = "entrybutton">
+        <input type="submit" value="Add Water Entry" />
+    </form>
+    <div>
+        <p>WATER TABLE:</p>
+    </div>
+
+</div>
+
+
+{% endblock %}
