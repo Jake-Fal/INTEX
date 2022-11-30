@@ -49,14 +49,12 @@ class Login(models.Model):
         return self.username
 
 class FoodItem(models.Model):
-    UnitName = models.ForeignKey(Unit,on_delete= models.DO_NOTHING)
-    FoodName = models.CharField(max_length=50, null=False)
-    Sodium_mg = models.SmallIntegerField(max_length=20, null=False)
-    Potassium_mg = models.SmallIntegerField(max_length=20, null=False)
-    Phosphate_mg = models.SmallIntegerField(max_length=20, null=False)
-    Protein_g = models.SmallIntegerField(max_length=20, null=False)
-    Water_L = models.SmallIntegerField(max_length=20, null=False)
-    Serving_size = models.DecimalField(max_digits=5,decimal_places=2,null=False)
+    FoodName = models.CharField(max_length=300, null=False)
+    Sodium_mg = models.SmallIntegerField(max_length=20, null=True)
+    Potassium_mg = models.SmallIntegerField(max_length=20, null=True)
+    Phosphate_mg = models.SmallIntegerField(max_length=20, null=True)
+    Protein_g = models.SmallIntegerField(max_length=20, null=True)
+    Water_L = models.SmallIntegerField(max_length=20, null=True)
 
  
     class Meta:

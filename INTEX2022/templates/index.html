@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-
+    <form action="/addentry/" method="POST">{% csrf_token %}<input type="submit" value="call"/></form>
 
         <div class="main">
         <section class="features-listing">  

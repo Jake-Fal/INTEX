@@ -1,7 +1,7 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
-from .funcs import searchAPI
-from .models import MealClass
+from .funcs import searchAPI, getById, getList
+from .models import MealClass, FoodItem, FoodEntry, Unit
 
 
 # Create your views here.
@@ -11,16 +11,19 @@ def indexPageView(request) :
 def searchFoodView(request):
     foods = []
     food = request.GET['food']
-    data = searchAPI(food)
+    data = FoodItem.objects.filter(FoodName__contains=food).distinct('FoodName')[:5]
     for i in data:
         foods.append({
-            'name':i['name'],
-            'id':i['id']
+            'name':str(i.FoodName),
+            'id':i.id
         })
     context = {
         'foods':foods
     }
     return render(request, 'searchresults.html', context)
+
+def getAPIList(request):
+    return HttpResponse('data')
 
 def journalPageView(request) :
     meals = MealClass.objects.all()
@@ -28,6 +31,14 @@ def journalPageView(request) :
         'meals':meals,
     }
     return render( request, 'journal.html', context)
+
+def addFoodEntry(request):
+    allFoods = list(FoodItem.objects.values_list('fdic', flat=True))
+    unit = list(Unit.objects.values_list('UnitName', flat=True))
+
+    
+    return HttpResponse('Added')
+
 
 def loginPageView(request) :
     return render( request, 'login.html')
