@@ -26,6 +26,7 @@ def searchFoodView(request):
     return render(request, 'searchresults.html', context)
 
 def getAPIList(request):
+    getList(200)
     return HttpResponse('data')
 
 def journalPageView(request) :
