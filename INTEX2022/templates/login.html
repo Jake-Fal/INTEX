@@ -15,3 +15,50 @@
     <br><br><br><br>
 </body>
 {% endblock %}
+
+
+{% comment %} 
+{% block content%}
+
+<!-- Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="loginModalLabel">
+            <i class ="fas fa-key"></i>&nbsp;&nbsp; Log in
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <h5 class="text-center mt-3">Restricted</h5>
+        <form action="/login_user" method="POST" autocomplete="off">
+            <div class='modal-body'>
+                {% csrf_token %}
+                <div class="input-group mb-3 mt-3">
+                    <span class="btn input-group-text border-secondary bg-light side-label">
+                        <i class="fas fa-user-alt"></i>
+                    </span>
+                    <input type="text" class="form-control" name="username" placeholder="Username">
+                </div>
+                <div class="input-group">
+                    <span class="btn input-group-text border-secondary bg-light side-label">
+                        <i class="fas fa-lock"></i>
+                    </span>
+                    <input type="password" class="form-control" name="password" placeholder="Password">
+                </div>
+            </div>
+    
+            <div class="container d-grid gap-2 m-4 mb-4">
+            <button type="button" class="btn btn-primary">Enter</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  {% endblock %} {% endcomment %}

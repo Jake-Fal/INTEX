@@ -1,4 +1,8 @@
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.cache import cache_control
 from django.shortcuts import render, redirect
 #from .forms import MovieDataForm
 import json
@@ -11,8 +15,30 @@ def indexPageView(request) :
 def journalPageView(request) :
     return render( request, 'journal.html')
 
+# Login Function
 def loginPageView(request) :
-    return render( request, 'login.html')
+    if request.user.is_authenticated:
+        return render(request, 'profile.html')
+    else:
+        messages.info(request, "Please login.")
+        return HttpResponseRedirect('/index.html')
+
+def loginUser(request) :
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username = username, password = password)
+        if user != None:
+            login(request, user)
+            return HttpResponseRedirect('/profile.html')
+        else: 
+            messages.error(request, "Enter correct username/password")
+            return HttpResponseRedirect('/index.html')
+
+def logoutUser(request) :
+    logout(request)
+    request.user = None
+    return HttpResponseRedirect('index.html')
 
 def profilePageView(request) :
     return render( request, 'profile.html')
