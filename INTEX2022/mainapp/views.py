@@ -1,7 +1,7 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from .funcs import searchAPI, getById, getList
-from .models import MealClass, FoodItem, FoodEntry, Unit
+from .models import MealClass, FoodItem, FoodEntry
 from .forms import ActualsForm
 from .models import Actuals
 import pandas as pd
