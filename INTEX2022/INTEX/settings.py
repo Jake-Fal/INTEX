@@ -50,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'mainapp.middleware.current_user.CurrentUserMiddleware',
 ]
 
 ROOT_URLCONF = 'INTEX.urls'
@@ -131,4 +132,4 @@ os.path.join(BASE_DIR, 'INTEX/static')]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-LOGIN_REDIRECT_URL = "dashboard"
+LOGIN_REDIRECT_URL = "redirect"

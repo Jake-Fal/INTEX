@@ -5,7 +5,7 @@ from .funcs import searchAPI, getById, getList
 from .models import MealClass, FoodItem, FoodEntry, WaterEntry, UserInfo
 from .models import Actuals
 from .forms import LoginForm
-from .models import Login
+
 import pandas as pd
 import psycopg2
 import json
@@ -181,15 +181,7 @@ def displayjournalPageView(request) :
     print(waterEntries)
     return render( request, 'displayjournal.html', context)
 
-def loginPageView(request) :
-    form = LoginForm
-    return render( request, 'login.html', {'form': form})
 
-
-def validatePage(request) :
-    return redirect(indexPageView)
-
- 
 def profilePageView(request) :
     return render( request, 'profile.html')
 
@@ -198,9 +190,11 @@ def register(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
+            
+            # print(request.session['_auth_user_id'])
             # username = form.cleaned_data.get('username')
             # messages.success(request, f'Hi {username}, your account was created successfully')
-            return HttpResponseRedirect('/createuser')
+            return HttpResponseRedirect('/login/')
     else :
         form = UserCreationForm
 
@@ -212,7 +206,7 @@ def createuserPageView(request) :
         form = UserForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/createuser?submitted=True')
+            return HttpResponseRedirect('/profile/')
     else:
         form = UserForm
         if 'submitted' in request.GET:
@@ -220,6 +214,12 @@ def createuserPageView(request) :
     form = UserForm
     return render( request, 'createuser.html', {'form': form, 'submitted':submitted})
 
+def login_redirect(request) :
+    try:
+        if UserInfo.objects.get(user = request.user.id) :
+            return HttpResponseRedirect('/journal/')
+    except :
+        return HttpResponseRedirect('/createuser/')
 
 def dashboardPageView2(request) :
     return render( request, 'dashboard.html')
