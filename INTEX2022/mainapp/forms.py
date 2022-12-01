@@ -1,9 +1,8 @@
 from django import forms
 
 from django.forms import ModelForm
-from .models import User, Login
+from .models import UserInfo
 from .models import Actuals
-# from .models import Login
 from django.contrib.auth.models import User
 
  
@@ -14,7 +13,7 @@ class LoginForm(forms.ModelForm):
 
 class UserForm(ModelForm) :
     class Meta:
-        model = User
+        model = UserInfo
         fields = ('FirstName', 'LastName', 'DOB', 'HeightFt', 'HeightIn', 'Weight', 'Sex')
         labels = {
             'FirstName': 'Name',
@@ -34,8 +33,8 @@ class UserForm(ModelForm) :
             'Weight': forms.NumberInput(attrs={'placeholder':'123'}),
             'Sex': forms.TextInput(attrs={'placeholder':'M/F'})
         }
-class LoginForm(ModelForm) :
-    class Meta:
-        model = Login
-        fields = ('username', 'password')
+# class LoginForm(ModelForm) :
+#     class Meta:
+#         model = User
+#         fields = ('username', 'password')
 

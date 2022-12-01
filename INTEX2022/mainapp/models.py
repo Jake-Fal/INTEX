@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class MealClass(models.Model):
@@ -10,7 +11,7 @@ class MealClass(models.Model):
     def __str__(self):
         return self.MealName
 
-class User(models.Model):
+class UserInfo(models.Model):
     FirstName = models.CharField(max_length=50, null=False)
     LastName = models.CharField(max_length=50, null=False)
     DOB = models.DateField()
@@ -18,6 +19,7 @@ class User(models.Model):
     HeightIn = models.SmallIntegerField()
     Weight = models.SmallIntegerField()
     Sex = models.CharField(max_length=20, null=False)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
  
     class Meta:
@@ -28,16 +30,6 @@ class User(models.Model):
 
     def getHeight(self):
         return f'{self.HeightFt}\'{self.HeightIn}\"'
-class Login(models.Model):
-    userID = models.ForeignKey(User, on_delete= models.CASCADE)
-    username = models.CharField(max_length=20, null=False)
-    password = models.CharField(max_length=20, null=False)
- 
-    class Meta:
-        db_table = 'login'
- 
-    def __str__(self):
-        return self.username
 
 class FoodItem(models.Model):
     FoodName = models.CharField(max_length=300, null=False)
