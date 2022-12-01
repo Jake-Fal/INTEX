@@ -34,7 +34,7 @@ def getById(id):
     return data
 
 
-def getList(num):
+def getList(num): #pulls records from api and stores in postgres
     import requests
     data = []
     fin = []
