@@ -13,9 +13,13 @@ import requests
 from .forms import UserForm
 
 
+
 # Create your views here.
 def indexPageView(request) :
-    return render( request, 'index.html')
+    
+    userid = request.user.id
+    print(userid)
+    return render( request, 'index.html', {'id':userid})
 
 def searchFoodView(request):
     foods = []
@@ -115,9 +119,12 @@ def journalPageView(request) :
     return render(request, 'journal.html', context)
 
 def addFoodEntry(request):
-    allFoods = list(FoodItem.objects.values_list('fdic', flat=True))
-
-    
+    if request.method == 'POST':
+        user = request.POST['userID']
+        date = request.POST['EntryDate']
+        meal = request.POST['meal']
+        food = request.POST['foodID']
+        servings = request.POST['servings']
     return HttpResponse('Added')
 
 
@@ -128,6 +135,11 @@ def loginPageView(request) :
     form = LoginForm
     return render( request, 'login.html', {'form': form})
 
+
+def validatePage(request) :
+    return redirect(indexPageView)
+
+ 
 def profilePageView(request) :
     return render( request, 'profile.html')
 
