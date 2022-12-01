@@ -1,8 +1,8 @@
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
-from .funcs import searchAPI, getById, getList
+from django.contrib.auth.forms import UserCreationFormfrom .funcs import searchAPI, getById, getList
 from .models import MealClass, FoodItem, FoodEntry
-from .forms import LoginForm
+from .forms import LoginForm, LoginForm
 from .models import Login
 import pandas as pd
 import psycopg2
@@ -54,12 +54,21 @@ def loginPageView(request) :
     form = LoginForm
     return render( request, 'login.html', {'form': form})
 
-def validatePage(request) :
-    return HttpResponseRedirect(dashboardPageView)
-
-    
 def profilePageView(request) :
     return render( request, 'profile.html')
+
+def register(request):
+    if request.method == "POST" :
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # username = form.cleaned_data.get('username')
+            # messages.success(request, f'Hi {username}, your account was created successfully')
+            return HttpResponseRedirect('/createuser')
+    else :
+        form = UserCreationForm
+
+    return render(request, 'register.html', {'form': form})
 
 def createuserPageView(request) :
     submitted = False

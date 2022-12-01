@@ -80,8 +80,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME':'kidney_health',
         'USER': 'postgres',
-        'PASSWORD': 'Andyman72599',
+        'PASSWORD': 'nacho',
         'HOST': 'localhost',
+        'PORT': '5050',
     }
 }
 
@@ -131,4 +132,4 @@ os.path.join(BASE_DIR, 'INTEX/static')]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-LOGIN_REDIRECT_URL = "index"
+LOGIN_REDIRECT_URL = "dashboard"
