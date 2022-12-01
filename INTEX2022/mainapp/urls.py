@@ -2,6 +2,7 @@ from django.urls import path
 from .views import indexPageView, createuserPageView, journalPageView, loginPageView, profilePageView, navView, apiTest, dashboardPageView, displayjournalPageView
 
 
+
 urlpatterns = [
     path('', indexPageView, name='index'),
     path('profile/', profilePageView, name='profile'),
