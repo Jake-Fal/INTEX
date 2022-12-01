@@ -8,6 +8,7 @@ import pandas as pd
 import psycopg2
 import json
 import requests
+from .forms import UserForm
 
 
 # Create your views here.
@@ -61,7 +62,18 @@ def profilePageView(request) :
     return render( request, 'profile.html')
 
 def createuserPageView(request) :
-    return render( request, 'createuser.html')
+    submitted = False
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/createuser?submitted=True')
+    else:
+        form = UserForm
+        if 'submitted' in request.GET:
+            submitted = True
+    form = UserForm
+    return render( request, 'createuser.html', {'form': form, 'submitted':submitted})
 
 
 def dashboardPageView2(request) :
