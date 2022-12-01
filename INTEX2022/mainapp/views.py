@@ -206,6 +206,14 @@ def createuserPageView(request) :
         form = UserForm(request.POST)
         if form.is_valid():
             form.save()
+            actualsEntry = Actuals()
+            actualsEntry.UserID = UserInfo.objects.get(user = request.user.id)
+            actualsEntry.Protein_g = 0
+            actualsEntry.Sodium_mg = 0
+            actualsEntry.Phosphorous_mg = 0
+            actualsEntry.Potassium_mg = 0
+            actualsEntry.Water_L = 0
+            actualsEntry.save()
             return HttpResponseRedirect('/profile/')
     else:
         form = UserForm
