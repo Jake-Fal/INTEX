@@ -2,7 +2,7 @@ from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from .funcs import searchAPI, getById, getList
-from .models import MealClass, FoodItem, FoodEntry
+from .models import MealClass, FoodItem, FoodEntry, WaterEntry, UserInfo
 from .models import Actuals
 from .forms import LoginForm
 from .models import Login
@@ -35,6 +35,59 @@ def searchFoodView(request):
     }
     return render(request, 'searchresults.html', context)
 
+def addFoodItem(request):
+    return render(request, 'addfood.html')
+
+def submitFoodItem(request):
+    if request.method == 'POST':
+        name = request.POST['name'].lower()
+        sodium = request.POST['sodium']
+        potassium = request.POST['potassium']
+        phosphorus = request.POST['phosphorus']
+        protein = request.POST['protein']
+
+        food = FoodItem()
+        food.FoodName = name
+        food.Protein_g = protein
+        food.Sodium_mg = sodium
+        food.Potassium_mg = potassium
+        food.Phosphate_mg = phosphorus
+        food.save()
+
+    return redirect(journalPageView)
+
+def addFoodEntry(request):
+    if request.method == 'POST':
+        user = request.POST['userID']
+        date = request.POST['EntryDate']
+        meal = request.POST['meal']
+        food = request.POST['foodID']
+        servings = request.POST['servings']
+    return HttpResponse('Added')
+
+def addWaterEntry(request):
+    return render(request, 'addwaterentry.html')
+
+def submitWaterEntry(request):
+    if request.method == 'POST':
+        userid = request.POST['userid']
+        date = request.POST['EntryDate']
+        amount = request.POST['amount']
+
+        waterEntry = WaterEntry()
+        waterEntry.UserID = UserInfo.objects.get(id=userid)
+        waterEntry.DateTime = date
+        waterEntry.Amount = amount
+        waterEntry.save()
+    return redirect(displayjournalPageView)
+
+def editWaterEntry(request, id):
+    pass
+
+def deleteWaterEntry(request, id):
+    WaterEntry.objects.get(id=id, userID=request.user.id).delete()
+    return redirect(displayjournalPageView)
+
 def getAPIList(request):
     #getList(200)
     return HttpResponse('data')
@@ -43,6 +96,8 @@ def journalPageView(request) :
     meals = MealClass.objects.all()
     data = {}
     pdata = {}
+    newvals = {}
+    npvals = {}
     pkeys = []
     pvals = []
     keys = []
@@ -57,7 +112,7 @@ def journalPageView(request) :
      }
     try:
         connection = psycopg2.connect(user="postgres",
-                                    password="Broncos2025",
+                                    password="Andyman72599",
                                     host="localhost",
                                     port="5432",
                                     database="kidney_health")
@@ -118,18 +173,13 @@ def journalPageView(request) :
 
     return render(request, 'journal.html', context)
 
-def addFoodEntry(request):
-    if request.method == 'POST':
-        user = request.POST['userID']
-        date = request.POST['EntryDate']
-        meal = request.POST['meal']
-        food = request.POST['foodID']
-        servings = request.POST['servings']
-    return HttpResponse('Added')
-
-
 def displayjournalPageView(request) :
-    return render( request, 'displayjournal.html')
+    waterEntries = WaterEntry.objects.all().values()
+    context = {
+        'water':waterEntries
+    }
+    print(waterEntries)
+    return render( request, 'displayjournal.html', context)
 
 def loginPageView(request) :
     form = LoginForm
@@ -177,6 +227,8 @@ def dashboardPageView2(request) :
 def dashboardPageView(request):
     data = {}
     pdata = {}
+    newvals = {}
+    npvals = {}
     pkeys = []
     pvals = []
     keys = []
@@ -191,7 +243,7 @@ def dashboardPageView(request):
      }
     try:
         connection = psycopg2.connect(user="postgres",
-                                    password="Broncos2025",
+                                    password="Andyman72599",
                                     host="localhost",
                                     port="5432",
                                     database="kidney_health")

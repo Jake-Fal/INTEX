@@ -10,7 +10,7 @@ class MealClass(models.Model):
     def __str__(self):
         return self.MealName
 
-class User(models.Model):
+class UserInfo(models.Model):
     FirstName = models.CharField(max_length=50, null=False)
     LastName = models.CharField(max_length=50, null=False)
     DOB = models.DateField()
@@ -29,7 +29,7 @@ class User(models.Model):
     def getHeight(self):
         return f'{self.HeightFt}\'{self.HeightIn}\"'
 class Login(models.Model):
-    userID = models.ForeignKey(User, on_delete= models.CASCADE)
+    userID = models.ForeignKey(UserInfo, on_delete= models.CASCADE)
     username = models.CharField(max_length=20, null=False)
     password = models.CharField(max_length=20, null=False)
  
@@ -54,10 +54,10 @@ class FoodItem(models.Model):
         return self.FoodName
 
 class FoodEntry(models.Model):
-    UserID = models.ForeignKey(User,on_delete= models.DO_NOTHING)
+    UserID = models.ForeignKey(UserInfo,on_delete= models.DO_NOTHING)
     MealName = models.ForeignKey(MealClass,on_delete= models.DO_NOTHING)
     FoodID = models.ForeignKey(FoodItem,on_delete= models.DO_NOTHING)
-    DateTime = models.DateTimeField(null=False)
+    DateTime = models.CharField(max_length=20, null=False)
     NumServings = models.DecimalField(max_digits=4,decimal_places=2,null=False)
 
  
@@ -65,11 +65,11 @@ class FoodEntry(models.Model):
         db_table = 'food_entry'
  
     def __str__(self):
-        return self.DateTime
+        return self.DateTime.date()
 
 class WaterEntry(models.Model):
-    UserID = models.ForeignKey(User,on_delete= models.DO_NOTHING)
-    DateTime = models.DateTimeField(null=False)
+    UserID = models.ForeignKey(UserInfo,on_delete= models.DO_NOTHING)
+    DateTime = models.CharField(max_length=20, null=False)
     Amount = models.DecimalField(max_digits=4,decimal_places=2,null=False)
 
  
@@ -91,7 +91,7 @@ class Goal(models.Model):
     F_Water_L = models.DecimalField(max_digits=5,decimal_places=2,null=False)
 
 class Actuals(models.Model):
-    UserID = models.ForeignKey(User, on_delete = models.DO_NOTHING, null=False)
+    UserID = models.ForeignKey(UserInfo, on_delete = models.DO_NOTHING, null=False)
     Protein_g = models.DecimalField(max_digits=5,decimal_places=2,null=False)
     Water_L = models.DecimalField(max_digits=5,decimal_places=2,null=False)
     Sodium_mg = models.DecimalField(max_digits=5,decimal_places=2,null=False)
