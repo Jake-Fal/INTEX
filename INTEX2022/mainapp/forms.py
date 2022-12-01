@@ -1,7 +1,10 @@
 from django import forms
-from .models import Actuals
+# from .models import Login
+from django.contrib.auth.models import User
  
-class ActualsForm(forms.ModelForm):
+class LoginForm(forms.ModelForm):
      class Meta:
-         model = Actuals
-         fields = '__all__'
+         model = User
+         fields = ('username', 'password')
+
+        

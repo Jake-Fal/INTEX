@@ -4,7 +4,14 @@
 
 <canvas id="aChart" width="4" height="3"></canvas>
 
-<body>
+<script>
+    function setUser(){
+        document.getElementById('userID').value = sessionStorage.getItem('userid');
+        console.log(document.getElementById('userID').value);
+    }
+</script>
+
+<body onLoad="setUser()">
     <form method="post" action="/addentry/">
         {% csrf_token %}
         Date: <input type="date" name="EntryDate"/><br/>
@@ -14,6 +21,7 @@
             {% endfor %}
         </select><br/>
         <input type='hidden' id='foodID' name="foodID"/>
+        <input type='hidden' id='userID' name="userID"/>
         Food Item: <input type="search" name="food" id="searchfood" hx-get="searchfood/" hx-trigger="keyup" hx-target="#results"/><br/>
         <div id='results'></div>
         <a>Add New Food Item</a><br/>
