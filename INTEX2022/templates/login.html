@@ -3,15 +3,17 @@
 {% block content %}
 
 <body>
-    <br><br>
-    <h1>Login</h1>
     
-    <form method="post" action="/submitchanges/{{data.data.id}}">
-        {% csrf_token %}
-        Username: <input type="text" name="Username"/><br/>
-        Password: <input type="password" name="Password"/><br/>
-        <input type="submit"/>
-    </form>
-    <br><br><br><br>
+    <div class = 'main-margins'>
+        <br><br>
+        <h1>Login</h1>
+        
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p}}
+
+            <input type="submit"/>
+        </form>
+    </div>
 </body>
 {% endblock %}

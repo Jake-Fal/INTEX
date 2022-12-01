@@ -1,12 +1,16 @@
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
+from django.contrib.auth.forms import UserCreationForm
 from .funcs import searchAPI, getById, getList
 from .models import MealClass, FoodItem, FoodEntry
 from .models import Actuals
+from .forms import LoginForm
+from .models import Login
 import pandas as pd
 import psycopg2
 import json
 import requests
+from .forms import UserForm
 
 
 # Create your views here.
@@ -121,13 +125,38 @@ def displayjournalPageView(request) :
     return render( request, 'displayjournal.html')
 
 def loginPageView(request) :
-    return render( request, 'login.html')
+    form = LoginForm
+    return render( request, 'login.html', {'form': form})
 
 def profilePageView(request) :
     return render( request, 'profile.html')
 
+def register(request):
+    if request.method == "POST" :
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # username = form.cleaned_data.get('username')
+            # messages.success(request, f'Hi {username}, your account was created successfully')
+            return HttpResponseRedirect('/createuser')
+    else :
+        form = UserCreationForm
+
+    return render(request, 'register.html', {'form': form})
+
 def createuserPageView(request) :
-    return render( request, 'createuser.html')
+    submitted = False
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/createuser?submitted=True')
+    else:
+        form = UserForm
+        if 'submitted' in request.GET:
+            submitted = True
+    form = UserForm
+    return render( request, 'createuser.html', {'form': form, 'submitted':submitted})
 
 
 def dashboardPageView2(request) :
