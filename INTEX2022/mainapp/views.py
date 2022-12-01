@@ -1,6 +1,7 @@
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationFormfrom .funcs import searchAPI, getById, getList
+from django.contrib.auth.forms import UserCreationForm
+from .funcs import searchAPI, getById, getList
 from .models import MealClass, FoodItem, FoodEntry
 from .forms import LoginForm, LoginForm
 from .models import Login
