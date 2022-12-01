@@ -85,7 +85,7 @@ def editWaterEntry(request, id):
     pass
 
 def deleteWaterEntry(request, id):
-    WaterEntry.objects.get(id=id, userID=request.user.id).delete()
+    WaterEntry.objects.get(id=id, UserID=request.user.id).delete()
     return redirect(displayjournalPageView)
 
 def getAPIList(request):
