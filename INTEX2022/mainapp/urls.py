@@ -12,6 +12,6 @@ urlpatterns = [
     path('dashboard/', dashboardPageView, name='dashboard'),
     path('nav/', navView, name='nav'),
     path('journal/searchfood/', searchFoodView, name='searchfood'),
-    path('addentry/', getAPIList, name='addfoodentry'),
+    path('addentry/', addFoodEntry, name='addfoodentry'),
     path('displayjournal/', displayjournalPageView, name='displayjournal')
     ]

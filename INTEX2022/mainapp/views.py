@@ -37,9 +37,8 @@ def journalPageView(request) :
     return render( request, 'journal.html', context)
 
 def addFoodEntry(request):
-    allFoods = list(FoodItem.objects.values_list('fdic', flat=True))
-
-    
+    if request.method == 'POST':
+        pass
     return HttpResponse('Added')
 
 
