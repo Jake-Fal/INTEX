@@ -23,7 +23,7 @@ class UserInfo(models.Model):
 
  
     class Meta:
-        db_table = 'user'
+        db_table = 'userinfo'
  
     def __str__(self):
         return f'{self.FirstName} {self.LastName}'
@@ -46,7 +46,7 @@ class FoodItem(models.Model):
         return self.FoodName
 
 class FoodEntry(models.Model):
-    UserID = models.ForeignKey(User,on_delete= models.DO_NOTHING)
+    UserID = models.ForeignKey(UserInfo,on_delete= models.DO_NOTHING)
     MealName = models.ForeignKey(MealClass,on_delete= models.DO_NOTHING)
     FoodID = models.ForeignKey(FoodItem,on_delete= models.DO_NOTHING)
     DateTime = models.DateTimeField(null=False)
@@ -60,7 +60,7 @@ class FoodEntry(models.Model):
         return self.DateTime
 
 class WaterEntry(models.Model):
-    UserID = models.ForeignKey(User,on_delete= models.DO_NOTHING)
+    UserID = models.ForeignKey(UserInfo,on_delete= models.DO_NOTHING)
     DateTime = models.DateTimeField(null=False)
     Amount = models.DecimalField(max_digits=4,decimal_places=2,null=False)
 
@@ -83,7 +83,7 @@ class Goal(models.Model):
     F_Water_L = models.DecimalField(max_digits=5,decimal_places=2,null=False)
 
 class Actuals(models.Model):
-    UserID = models.ForeignKey(User, on_delete = models.DO_NOTHING, null=False)
+    UserID = models.ForeignKey(UserInfo, on_delete = models.DO_NOTHING, null=False)
     Protein_g = models.DecimalField(max_digits=5,decimal_places=2,null=False)
     Water_L = models.DecimalField(max_digits=5,decimal_places=2,null=False)
     Sodium_mg = models.DecimalField(max_digits=5,decimal_places=2,null=False)
