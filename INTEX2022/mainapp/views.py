@@ -112,7 +112,7 @@ def journalPageView(request) :
      }
     try:
         connection = psycopg2.connect(user="postgres",
-                                    password="Andyman72599",
+                                    password="Broncos2025",
                                     host="localhost",
                                     port="5432",
                                     database="kidney_health")
@@ -241,14 +241,44 @@ def dashboardPageView(request):
          'pkeys': pkeys
 
      }
+    import psycopg2
+
+    # try:
+    #     connection = psycopg2.connect(user="postgres",
+    #                                 password="Broncos2025",
+    #                                 host="localhost",
+    #                                 port="5432",
+    #                                 database="kidney_health")
+    #     cursor = connection.cursor()
+    #     postgreSQL_select_Query = "select * from mainapp_goal"
+
+    #     cursor.execute(postgreSQL_select_Query)
+    #     print("Selecting rows from mobile table using cursor.fetchall")
+    #     mobile_records = cursor.fetchall()
+
+    #     print("Print each row and it's columns values")
+    #     for row in mobile_records:
+    #         print("Id = ", row[0], )
+    #         print("Model = ", row[1])
+    #         print("Price  = ", row[2], "\n")
+
+    # except (Exception, psycopg2.Error) as error:
+    #     print("Error while fetching data from PostgreSQL", error)
+
+    # finally:
+    #     # closing database connection.
+    #     if connection:
+    #         cursor.close()
+    #         connection.close()
+    #         print("PostgreSQL connection is closed")
     try:
         connection = psycopg2.connect(user="postgres",
-                                    password="Andyman72599",
+                                    password="Broncos2025",
                                     host="localhost",
                                     port="5432",
                                     database="kidney_health")
         cursor = connection.cursor()
-        postgreSQL_select_Query = "select * from mainapp_goal"
+        postgreSQL_select_Query = "select * from actuals inner join user on user.id = actuals.UserID_id"
 
         cursor.execute(postgreSQL_select_Query)
         print("Selecting rows from mobile table using cursor.fetchall")
@@ -257,28 +287,21 @@ def dashboardPageView(request):
         print("Print each row and it's columns values")
 
         for row in mobile_records:
-            print("Id = ", row[0], )
-            print("Min_Sodium_mg = ", row[1])
-            print("Max_Sodium_mg  = ", row[2])
-            print("Min_Potassium_mg  = ", row[3])
-            print("Max_Potassium_mg  = ", row[4])
-            print("Min_Phosphorous_mg  = ", row[5])
-            print("Max_Phosphorous_mg  = ", row[6])
-            print("Protien_g  = ", row[7])
-            print("M_Water_L  = ", row[8])
-            print("F_Water_L  = ", row[9])
+            print("Sodium = ", row[1])
+            print("Potassium  = ", row[2])
+            print("Phosphorous  = ", row[3])
+            print("Protien g/kg  = ", row[4])
+            print("Male Water L/Day  = ", row[5])
+            print("Female Water L/Day  = ", row[6])
 
-        newvals = {'Min_Sodium_mg': row[1], 
-        "Max_Sodium_mg": row[2],
-        "Min_Potassium_mg": row[3],
-        "Max_Potassium_mg": row[4],
-        "Min_Phosphorous_mg": row[5],
-        "Max_Phosphorous_mg": row[6],
+        newvals = {'Sodium': row[1],
+        "Potassium": row[2],
+        "Phosphorous": row[3],
         }
 
-        npvals = {"Protien_g": float(row[7]),
-        "M_Water_L": float(row[8]),
-        "F_Water_L": float(row[9])}
+        npvals = {"Protien g/kg": float(row[4]),
+        "Male Water L/Day  = ": float(row[5]),
+        "Female Water L/Day  = ": float(row[6])}
     
             
 
