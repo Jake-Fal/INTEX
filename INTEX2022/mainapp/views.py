@@ -58,12 +58,21 @@ def submitFoodItem(request):
 
 def addFoodEntry(request):
     if request.method == 'POST':
-        user = request.POST['userID']
+        user = request.user.id
         date = request.POST['EntryDate']
         meal = request.POST['meal']
         food = request.POST['foodID']
         servings = request.POST['servings']
-    return HttpResponse('Added')
+
+        entry = FoodEntry()
+        entry.UserID = UserInfo.objects.get(id=user)
+        entry.DateTime = date
+        entry.MealName = MealClass.objects.get(MealName=meal)
+        entry.FoodID = FoodItem.objects.get(id=food)
+        entry.NumServings = servings
+        entry.save()
+
+    return redirect(displayjournalPageView)
 
 def addWaterEntry(request):
     return render(request, 'addwaterentry.html')
@@ -82,11 +91,58 @@ def submitWaterEntry(request):
     return redirect(displayjournalPageView)
 
 def editWaterEntry(request, id):
-    pass
+    entry = WaterEntry.objects.get(id=id)
+    context = {
+        'entry': entry
+    }
+    return render(request, 'editwaterentry.html', context)
+
+def submitWaterChanges(request, id):
+    entry = WaterEntry.objects.get(id=id)
+
+    if request.method == 'POST':
+        entry.DateTime = request.POST['EntryDate']
+        entry.Amount = request.POST['amount']
+        entry.save()
+
+    return redirect(displayjournalPageView)
+    
 
 def deleteWaterEntry(request, id):
-    WaterEntry.objects.get(id=id, UserID=request.user.id).delete()
+    WaterEntry.objects.get(id=id).delete()
     return redirect(displayjournalPageView)
+
+def deleteFoodEntry(request, id):
+    FoodEntry.objects.get(id=id).delete()
+    return redirect(displayjournalPageView)
+
+def editFoodEntry(request, id):
+    entry = FoodEntry.objects.get(id=id)
+    
+    context = {
+        'entry' : entry,
+        'meals':MealClass.objects.all()
+    }
+    return render(request, 'editfoodentry.html', context)
+
+def foodChanges(request, id):
+    entry = FoodEntry.objects.get(id=id)
+
+    if request.method == 'POST':
+        date = request.POST['EntryDate']
+        meal = request.POST['meal']
+        food = request.POST['foodID']
+        servings = request.POST['servings']
+
+        entry.DateTime = date
+        entry.MealName = MealClass.objects.get(MealName=meal)
+        entry.FoodID = FoodItem.objects.get(id=food)
+        entry.NumServings = servings
+        entry.save()
+
+    return redirect(displayjournalPageView)
+
+
 
 def getAPIList(request):
     #getList(200)
@@ -175,10 +231,28 @@ def journalPageView(request) :
 
 def displayjournalPageView(request) :
     waterEntries = WaterEntry.objects.all().values()
+    foodEntries = FoodEntry.objects.all().values()
+    food = []
+    for i in foodEntries:
+        rec = {}
+        for key in dict(i):
+            if key in ['id', 'DateTime', 'NumServings']:
+                if key == 'NumServings':
+                    rec[key] = float(dict(i)[key])
+                else:
+                    rec[key] = dict(i)[key]
+            elif key == 'UserID_id':
+                rec[key] = UserInfo.objects.get(id=dict(i)[key]).id
+            elif key == 'MealName_id':
+                rec[key] = MealClass.objects.get(id=dict(i)[key]).MealName
+            elif key == 'FoodID_id':
+                rec[key] = FoodItem.objects.get(id=dict(i)[key]).FoodName
+        food.append(rec)
+    print(food)
     context = {
-        'water':waterEntries
+        'water':waterEntries,
+        'food':food
     }
-    print(waterEntries)
     return render( request, 'displayjournal.html', context)
 
 def loginPageView(request) :
