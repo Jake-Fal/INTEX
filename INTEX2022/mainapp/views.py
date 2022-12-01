@@ -3,7 +3,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from .funcs import searchAPI, getById, getList
 from .models import MealClass, FoodItem, FoodEntry
-from .forms import LoginForm, LoginForm
+from .models import Actuals
+from .forms import LoginForm
 from .models import Login
 import pandas as pd
 import psycopg2
@@ -36,10 +37,82 @@ def getAPIList(request):
 
 def journalPageView(request) :
     meals = MealClass.objects.all()
+    data = {}
+    pdata = {}
+    pkeys = []
+    pvals = []
+    keys = []
+    values = []
     context = {
-        'meals':meals,
-    }
-    return render( request, 'journal.html', context)
+         'keys': keys,
+         'values': values,
+         'data': data,
+         'pvals': pvals,
+         'pkeys': pkeys,
+         'meals': meals
+     }
+    try:
+        connection = psycopg2.connect(user="postgres",
+                                    password="Broncos2025",
+                                    host="localhost",
+                                    port="5432",
+                                    database="kidney_health")
+        cursor = connection.cursor()
+        postgreSQL_select_Query = "select * from mainapp_goal"
+
+        cursor.execute(postgreSQL_select_Query)
+        print("Selecting rows from mobile table using cursor.fetchall")
+        mobile_records = cursor.fetchall()
+
+        print("Print each row and it's columns values")
+
+        for row in mobile_records:
+            print("Id = ", row[0], )
+            print("Min_Sodium_mg = ", row[1])
+            print("Max_Sodium_mg  = ", row[2])
+            print("Min_Potassium_mg  = ", row[3])
+            print("Max_Potassium_mg  = ", row[4])
+            print("Min_Phosphorous_mg  = ", row[5])
+            print("Max_Phosphorous_mg  = ", row[6])
+            print("Protien_g  = ", row[7])
+            print("M_Water_L  = ", row[8])
+            print("F_Water_L  = ", row[9])
+
+        newvals = {'Min_Sodium_mg': row[1], 
+        "Max_Sodium_mg": row[2],
+        "Min_Potassium_mg": row[3],
+        "Max_Potassium_mg": row[4],
+        "Min_Phosphorous_mg": row[5],
+        "Max_Phosphorous_mg": row[6],
+        }
+
+        npvals = {"Protien_g": float(row[7]),
+        "M_Water_L": float(row[8]),
+        "F_Water_L": float(row[9])}
+    
+            
+
+
+
+    except (Exception, psycopg2.Error) as error:
+        print("Error while fetching data from PostgreSQL", error)
+
+    finally:
+        # closing database connection.
+        if connection:
+            cursor.close()
+            connection.close()
+            print("PostgreSQL connection is closed")
+    data.update(newvals)
+    pdata.update(npvals)
+    for key, value in data.items():
+        keys.append(key)
+        values.append(value)
+    for key, value in pdata.items():
+        pkeys.append(key)
+        pvals.append(value)
+
+    return render(request, 'journal.html', context)
 
 def addFoodEntry(request):
     allFoods = list(FoodItem.objects.values_list('fdic', flat=True))
@@ -91,8 +164,18 @@ def dashboardPageView2(request) :
 
 def dashboardPageView(request):
     data = {}
+    pdata = {}
+    pkeys = []
+    pvals = []
+    keys = []
+    values = []
     context = {
+         'keys': keys,
+         'values': values,
          'data': data,
+         'pvals': pvals,
+         'pkeys': pkeys
+
      }
     try:
         connection = psycopg2.connect(user="postgres",
@@ -127,10 +210,11 @@ def dashboardPageView(request):
         "Max_Potassium_mg": row[4],
         "Min_Phosphorous_mg": row[5],
         "Max_Phosphorous_mg": row[6],
-        "Protien_g": float(row[7]),
-        "M_Water_L": float(row[8]),
-        "F_Water_L": float(row[9])
         }
+
+        npvals = {"Protien_g": float(row[7]),
+        "M_Water_L": float(row[8]),
+        "F_Water_L": float(row[9])}
     
             
 
@@ -146,7 +230,14 @@ def dashboardPageView(request):
             connection.close()
             print("PostgreSQL connection is closed")
     data.update(newvals)
-    print(data)
+    pdata.update(npvals)
+    for key, value in data.items():
+        keys.append(key)
+        values.append(value)
+    for key, value in pdata.items():
+        pkeys.append(key)
+        pvals.append(value)
+
     return render(request, 'dashboard.html', context)
 
 def navView(request):

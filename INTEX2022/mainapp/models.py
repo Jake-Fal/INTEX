@@ -41,11 +41,11 @@ class Login(models.Model):
 
 class FoodItem(models.Model):
     FoodName = models.CharField(max_length=300, null=False)
-    Sodium_mg = models.SmallIntegerField(max_length=20, null=True)
-    Potassium_mg = models.SmallIntegerField(max_length=20, null=True)
-    Phosphate_mg = models.SmallIntegerField(max_length=20, null=True)
-    Protein_g = models.SmallIntegerField(max_length=20, null=True)
-    Water_L = models.SmallIntegerField(max_length=20, null=True)
+    Sodium_mg = models.SmallIntegerField(null=True)
+    Potassium_mg = models.SmallIntegerField(null=True)
+    Phosphate_mg = models.SmallIntegerField(null=True)
+    Protein_g = models.SmallIntegerField(null=True)
+    Water_L = models.SmallIntegerField(null=True)
 
     class Meta:
         db_table = 'food_item'
