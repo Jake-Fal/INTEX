@@ -9,7 +9,7 @@
         <h1>Login</h1>
 
         
-        <form method="post" action="/validate/>
+        <form method="post" action="/validate/">
             {% csrf_token %}
             {{ form.as_p}}
 

@@ -1,7 +1,7 @@
 from django import forms
 
 from django.forms import ModelForm
-from .models import User, Login
+from .models import UserInfo, Login
 from .models import Actuals
 # from .models import Login
 from django.contrib.auth.models import User
@@ -14,7 +14,7 @@ class LoginForm(forms.ModelForm):
 
 class UserForm(ModelForm) :
     class Meta:
-        model = User
+        model = UserInfo
         fields = ('FirstName', 'LastName', 'DOB', 'HeightFt', 'HeightIn', 'Weight', 'Sex')
         labels = {
             'FirstName': 'Name',
