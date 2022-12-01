@@ -3,7 +3,7 @@ from django.urls import path
 from django.contrib.auth import views as auth_view
 from .views import register, addFoodItem,login_redirect
 from django.contrib.auth import views as auth_view
-from .views import indexPageView, createuserPageView, journalPageView, profilePageView, navView, searchFoodView,addFoodEntry, getAPIList, profilePageView, dashboardPageView, displayjournalPageView, submitFoodItem, addWaterEntry, submitWaterEntry, editWaterEntry, deleteWaterEntry
+from .views import indexPageView, createuserPageView, journalPageView, profilePageView, navView, searchFoodView,addFoodEntry, getAPIList, profilePageView, dashboardPageView, displayjournalPageView, submitFoodItem, addWaterEntry, submitWaterEntry, editWaterEntry, deleteWaterEntry, updateProfile
 
 urlpatterns = [
     path('', indexPageView, name='index'),
@@ -23,5 +23,6 @@ urlpatterns = [
     path('addwater/', addWaterEntry, name='addwater'),
     path('submitwater/', submitWaterEntry, name='submitwater'),
     path('editwater/<int:id>/', editWaterEntry, name='editwater'),
-    path('deletewater/<int:id>/', deleteWaterEntry, name='deletewater')
+    path('deletewater/<int:id>/', deleteWaterEntry, name='deletewater'),
+    path('updateprofile', updateProfile, name='update')
     ]

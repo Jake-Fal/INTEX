@@ -1,5 +1,5 @@
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from .funcs import searchAPI, getById, getList
 from .models import MealClass, FoodItem, FoodEntry, WaterEntry, UserInfo
@@ -183,7 +183,37 @@ def displayjournalPageView(request) :
 
 
 def profilePageView(request) :
-    return render( request, 'profile.html')
+    UserInfo.objects.get(user = request.user.id).id
+    obj = get_object_or_404(UserInfo, pk = UserInfo.objects.get(user = request.user.id).id)
+    form = UserForm(request.POST or None, instance = obj)
+
+    # if form.is_valid:
+    #     form.save()
+    return render( request, 'profile.html', {'form':form})
+
+def updateProfile(request):
+    UserInfo.objects.get(user = request.user.id).id
+    obj = get_object_or_404(UserInfo, pk = UserInfo.objects.get(user = request.user.id).id)
+    userinfo = obj
+    if request.method == 'POST':
+        FirstName = request.POST['FirstName']
+        LastName = request.POST['LastName']
+        DOB = request.POST['DOB']
+        HeightFt = request.POST['HeightFt']
+        HeightIn = request.POST['HeightIn']
+        Weight = request.POST['Weight']
+        Sex = request.POST['Sex']
+
+        userinfo.FirstName = FirstName
+        userinfo.LastName = LastName
+        userinfo.DOB = DOB
+        userinfo.HeightFt = HeightFt
+        userinfo.HeightIn = HeightIn
+        userinfo.Weight = Weight
+        userinfo.Sex = Sex
+
+        userinfo.save()
+    return redirect(profilePageView)
 
 def register(request):
     if request.method == "POST" :
