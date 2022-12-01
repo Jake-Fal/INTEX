@@ -25,6 +25,9 @@ class User(models.Model):
  
     def __str__(self):
         return f'{self.FirstName} {self.LastName}'
+
+    def getHeight(self):
+        return f'{self.HeightFt}\'{self.HeightIn}\"'
 class Login(models.Model):
     userID = models.ForeignKey(User, on_delete= models.CASCADE)
     username = models.CharField(max_length=20, null=False)
@@ -37,14 +40,13 @@ class Login(models.Model):
         return self.username
 
 class FoodItem(models.Model):
-    FoodName = models.CharField(max_length=50, null=False)
-    Protein_g = models.DecimalField(max_digits=5,decimal_places=2,null=False)
-    Water_L = models.DecimalField(max_digits=5,decimal_places=2,null=False)
-    Sodium_mg = models.DecimalField(max_digits=5,decimal_places=2,null=False)
-    Potassium_mg = models.DecimalField(max_digits=5,decimal_places=2,null=False)
-    Phosphorous_mg = models.DecimalField(max_digits=5,decimal_places=2,null=False)
+    FoodName = models.CharField(max_length=300, null=False)
+    Sodium_mg = models.SmallIntegerField(max_length=20, null=True)
+    Potassium_mg = models.SmallIntegerField(max_length=20, null=True)
+    Phosphate_mg = models.SmallIntegerField(max_length=20, null=True)
+    Protein_g = models.SmallIntegerField(max_length=20, null=True)
+    Water_L = models.SmallIntegerField(max_length=20, null=True)
 
- 
     class Meta:
         db_table = 'food_item'
  
