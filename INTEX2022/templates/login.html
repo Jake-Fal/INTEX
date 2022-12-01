@@ -12,7 +12,8 @@
             {% csrf_token %}
             {{ form.as_p}}
 
-            <input type="submit"/>
+            <a class="current" href="{% url 'register' %}">Don't Have an Account? Create New Acccount</a>
+            <input type="submit" value="Login"/>
         </form>
     </div>
 </body>

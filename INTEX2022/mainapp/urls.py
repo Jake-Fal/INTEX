@@ -2,7 +2,7 @@ from django.urls import path
 from django.contrib.auth import views as auth_view
 from .views import indexPageView, createuserPageView, journalPageView, profilePageView, navView, dashboardPageView, displayjournalPageView, register
 from django.contrib.auth import views as auth_view
-from .views import indexPageView, createuserPageView, dashboardPageView, journalPageView, profilePageView, navView, searchFoodView,addFoodEntry, getAPIList, profilePageView, dashboardPageView, displayjournalPageView
+from .views import indexPageView, createuserPageView, dashboardPageView, journalPageView, profilePageView, navView, searchFoodView,addFoodEntry, getAPIList, profilePageView, dashboardPageView, displayjournalPageView, login_redirect
 
 
 urlpatterns = [
@@ -16,6 +16,7 @@ urlpatterns = [
     path('journal/searchfood/', searchFoodView, name='searchfood'),
     path('addentry/', getAPIList, name='addfoodentry'),
     path('displayjournal/', displayjournalPageView, name='displayjournal'),
-    path('register/', register, name='register')
+    path('register/', register, name='register'),
+    path('login_redirect', login_redirect, name='redirect' )
     ]
     
