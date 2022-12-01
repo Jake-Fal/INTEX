@@ -17,7 +17,7 @@ urlpatterns = [
     path('journal/searchfood/', searchFoodView, name='searchfood'),
 
     path('addentry/', addFoodEntry, name='addfoodentry'),
-    path('displayjournal/', displayjournalPageView, name='displayjournal')
+    path('displayjournal/', displayjournalPageView, name='displayjournal'),
 
     path('register/', register, name='register')
 
