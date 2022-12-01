@@ -50,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'mainapp.middleware.current_user.CurrentUserMiddleware',
 ]
 
 ROOT_URLCONF = 'INTEX.urls'
@@ -80,9 +81,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME':'kidney_health',
         'USER': 'postgres',
-        'PASSWORD': 'nacho',
+        'PASSWORD': 'animelife',
         'HOST': 'localhost',
-        'PORT': '5050',
     }
 }
 

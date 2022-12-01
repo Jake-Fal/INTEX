@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from mainapp.middleware import current_user
 # Create your models here.
 class MealClass(models.Model):
     MealName = models.CharField(max_length=10, null=False)
@@ -19,11 +19,13 @@ class UserInfo(models.Model):
     HeightIn = models.SmallIntegerField()
     Weight = models.SmallIntegerField()
     Sex = models.CharField(max_length=20, null=False)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete= models.CASCADE, blank=False, related_name='created_by', editable=False, default=current_user.CurrentUserMiddleware.get_current_user)
+
+    # user = models.OneToOneField(User, on_delete=models.CASCADE)
 
  
     class Meta:
-        db_table = 'user'
+        db_table = 'userinfo'
  
     def __str__(self):
         return f'{self.FirstName} {self.LastName}'
