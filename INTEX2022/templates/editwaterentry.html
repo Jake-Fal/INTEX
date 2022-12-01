@@ -1,0 +1,14 @@
+{% extends 'nav.html' %}
+{% load static %}
+{% block content %}
+
+
+<form method="post" action="/submitwaterchanges/{{ entry.id }}/">
+    {% csrf_token %}
+    <input type="hidden" name="waterID" value="{{ entry.id }}"/>
+    Date: <input type="date" name="EntryDate" value="{{entry.DateTime}}"/><br/>
+    Amount (L): <input type="number" name="amount" value="{{ entry.Amount }}"/><br/>
+    <input type="submit"/>
+</form>
+
+{% endblock %}

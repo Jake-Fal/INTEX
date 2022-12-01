@@ -10,6 +10,46 @@
 
     <div>
         <p>FOOD TABLE:</p>
+        <table>
+            <thead>
+                <tr>
+                    {% for key in food|first %}
+                    {% if key == 'MealName_id'%}
+                        <th>Meal</th>
+                    {% elif key == 'FoodID_id' %}
+                        <th>Food</th>
+                    {% elif key == 'NumServings' %}
+                        <th>Servings</th>
+                    {% elif key != 'id' and key != 'UserID_id' %}
+                        <th>{{key}}</th>
+                    {% endif %}
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in food %}
+                <tr>
+                    {% for key,value in row.items %}
+                    {% if key != 'id' and key != 'UserID_id' %}
+                        <td>{{ value }}</td>
+                    {% endif %}
+                    {% endfor %}
+                    <td>
+                        <form method = "post" action="/editfood/{{ row.id }}/">
+                            {% csrf_token %}
+                            <input type="submit" value="Edit"></input>
+                        </form>
+                    </td>
+                    <td>
+                        <form method = "post" action="/deletefood/{{ row.id }}/">
+                            {% csrf_token %}
+                            <input type="submit" value="Delete"></input>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody> 
+        </table>
         
     </div>
 

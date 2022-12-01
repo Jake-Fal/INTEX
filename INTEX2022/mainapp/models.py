@@ -60,7 +60,7 @@ class FoodEntry(models.Model):
         db_table = 'food_entry'
  
     def __str__(self):
-        return self.DateTime.date()
+        return self.DateTime
 
 class WaterEntry(models.Model):
     UserID = models.ForeignKey(UserInfo,on_delete= models.DO_NOTHING)

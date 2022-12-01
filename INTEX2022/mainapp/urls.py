@@ -3,6 +3,8 @@ from django.urls import path
 from django.contrib.auth import views as auth_view
 from .views import register, addFoodItem,login_redirect
 from django.contrib.auth import views as auth_view
+from .views import indexPageView, createuserPageView, dashboardPageView, journalPageView, loginPageView, profilePageView, navView, searchFoodView,addFoodEntry, getAPIList, profilePageView, dashboardPageView, displayjournalPageView, submitFoodItem, addWaterEntry, submitWaterEntry, editWaterEntry, deleteWaterEntry, submitWaterChanges, deleteFoodEntry, editFoodEntry, foodChanges
+
 from .views import indexPageView, createuserPageView, journalPageView, profilePageView, navView, searchFoodView,addFoodEntry, getAPIList, profilePageView, dashboardPageView, displayjournalPageView, submitFoodItem, addWaterEntry, submitWaterEntry, editWaterEntry, deleteWaterEntry, updateProfile
 
 urlpatterns = [
@@ -15,7 +17,6 @@ urlpatterns = [
     path('dashboard/', dashboardPageView, name='dashboard'),
     path('nav/', navView, name='nav'),
     path('journal/searchfood/', searchFoodView, name='searchfood'),
-    path('addentry/', addFoodEntry, name='addfoodentry'),
     path('displayjournal/', displayjournalPageView, name='displayjournal'),
     path('register/', register, name='register'),
     path('login_redirect', login_redirect, name='redirect'),
@@ -25,5 +26,11 @@ urlpatterns = [
     path('submitwater/', submitWaterEntry, name='submitwater'),
     path('editwater/<int:id>/', editWaterEntry, name='editwater'),
     path('deletewater/<int:id>/', deleteWaterEntry, name='deletewater'),
+    path('submitwaterchanges/<int:id>/', submitWaterChanges, name="submitwater"),
+    path('addentry/', addFoodEntry, name='addfoodentry'),
+    path('deletefood/<int:id>/', deleteFoodEntry, name='deletefood'),
+    path('editfood/<int:id>/', editFoodEntry, name='editfood'),
+    path('foodchanges/<int:id>/', foodChanges, name='foodchanges'),
     path('updateprofile', updateProfile, name='update')
     ]
+
