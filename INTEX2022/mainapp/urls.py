@@ -3,12 +3,13 @@ from django.urls import path
 from django.contrib.auth import views as auth_view
 from .views import register, addFoodItem,login_redirect
 from django.contrib.auth import views as auth_view
-from .views import indexPageView, createuserPageView, dashboardPageView, journalPageView, loginPageView, profilePageView, navView, searchFoodView,addFoodEntry, getAPIList, profilePageView, dashboardPageView, displayjournalPageView, submitFoodItem, addWaterEntry, submitWaterEntry, editWaterEntry, deleteWaterEntry, submitWaterChanges, deleteFoodEntry, editFoodEntry, foodChanges
+from .views import indexPageView, createuserPageView, dashboardPageView, journalPageView, profilePageView, navView, searchFoodView,addFoodEntry, getAPIList, profilePageView, dashboardPageView, displayjournalPageView, submitFoodItem, addWaterEntry, submitWaterEntry, editWaterEntry, deleteWaterEntry, submitWaterChanges, deleteFoodEntry, editFoodEntry, foodChanges
 
 from .views import indexPageView, createuserPageView, journalPageView, profilePageView, navView, searchFoodView,addFoodEntry, getAPIList, profilePageView, dashboardPageView, displayjournalPageView, submitFoodItem, addWaterEntry, submitWaterEntry, editWaterEntry, deleteWaterEntry, updateProfile
 
 urlpatterns = [
     path('', indexPageView, name='index'),
+    path('adddata/', getAPIList, name="data"),
     path('profile/', profilePageView, name='profile'),
     path('journal/', journalPageView, name='journal'),
     path('login/', auth_view.LoginView.as_view(template_name = 'login.html'), name='login'),

@@ -65,7 +65,7 @@ def addFoodEntry(request):
         servings = request.POST['servings']
 
         entry = FoodEntry()
-        entry.UserID = UserInfo.objects.get(id=user)
+        entry.UserID = UserInfo.objects.get(user=user)
         entry.DateTime = date
         entry.MealName = MealClass.objects.get(MealName=meal)
         entry.FoodID = FoodItem.objects.get(id=food)
@@ -84,7 +84,7 @@ def submitWaterEntry(request):
         amount = request.POST['amount']
 
         waterEntry = WaterEntry()
-        waterEntry.UserID = UserInfo.objects.get(id=userid)
+        waterEntry.UserID = UserInfo.objects.get(user=request.user.id)
         waterEntry.DateTime = date
         waterEntry.Amount = amount
         waterEntry.save()
@@ -145,7 +145,7 @@ def foodChanges(request, id):
 
 
 def getAPIList(request):
-    #getList(200)
+    getList(200)
     return HttpResponse('data')
 
 def journalPageView(request) :
@@ -305,6 +305,7 @@ def register(request):
     return render(request, 'register.html', {'form': form})
 
 def createuserPageView(request) :
+    print(request.user.id)
     submitted = False
     if request.method == 'POST':
         form = UserForm(request.POST)
@@ -392,10 +393,6 @@ def dashboardPageView(request):
         "M_Water_L": float(row[8]),
         "F_Water_L": float(row[9])}
     
-            
-
-
-
     except (Exception, psycopg2.Error) as error:
         print("Error while fetching data from PostgreSQL", error)
 
