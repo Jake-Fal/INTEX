@@ -33,13 +33,14 @@ class UserInfo(models.Model):
     def getHeight(self):
         return f'{self.HeightFt}\'{self.HeightIn}\"'
 
+
 class FoodItem(models.Model):
     FoodName = models.CharField(max_length=300, null=False)
-    Sodium_mg = models.SmallIntegerField(max_length=20, null=True)
-    Potassium_mg = models.SmallIntegerField(max_length=20, null=True)
-    Phosphate_mg = models.SmallIntegerField(max_length=20, null=True)
-    Protein_g = models.SmallIntegerField(max_length=20, null=True)
-    Water_L = models.SmallIntegerField(max_length=20, null=True)
+    Sodium_mg = models.SmallIntegerField(null=True)
+    Potassium_mg = models.SmallIntegerField(null=True)
+    Phosphate_mg = models.SmallIntegerField(null=True)
+    Protein_g = models.SmallIntegerField(null=True)
+    Water_L = models.SmallIntegerField(null=True)
 
     class Meta:
         db_table = 'food_item'
@@ -51,7 +52,7 @@ class FoodEntry(models.Model):
     UserID = models.ForeignKey(UserInfo,on_delete= models.DO_NOTHING)
     MealName = models.ForeignKey(MealClass,on_delete= models.DO_NOTHING)
     FoodID = models.ForeignKey(FoodItem,on_delete= models.DO_NOTHING)
-    DateTime = models.DateTimeField(null=False)
+    DateTime = models.CharField(max_length=20, null=False)
     NumServings = models.DecimalField(max_digits=4,decimal_places=2,null=False)
 
  
@@ -59,11 +60,11 @@ class FoodEntry(models.Model):
         db_table = 'food_entry'
  
     def __str__(self):
-        return self.DateTime
+        return self.DateTime.date()
 
 class WaterEntry(models.Model):
     UserID = models.ForeignKey(UserInfo,on_delete= models.DO_NOTHING)
-    DateTime = models.DateTimeField(null=False)
+    DateTime = models.CharField(max_length=20, null=False)
     Amount = models.DecimalField(max_digits=4,decimal_places=2,null=False)
 
  

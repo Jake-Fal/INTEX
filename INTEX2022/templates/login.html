@@ -3,12 +3,13 @@
 {% block content %}
 
 <body>
-    
+
     <div class = 'main-margins'>
         <br><br>
         <h1>Login</h1>
+
         
-        <form method="post">
+        <form method="post" action="/validate/">
             {% csrf_token %}
             {{ form.as_p}}
 

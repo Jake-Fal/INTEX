@@ -24,9 +24,17 @@
 
     <link rel="icon" type="image/x-icon" href="{% static 'img/apple-touch-icon-precomposed.png' %}">
 
-  </head>
-  <body>
+    <script>
+      function setID(i){
+        sessionStorage.setItem('userid',i);
+        console.log(sessionStorage.getItem('userid'));
+      }
+    </script>
+    
 
+  </head>
+  <body onLoad="setID({{id}})">
+    
     <!-- start: off canvas area -->
     <aside class="off-canvas">
       <div class="row">

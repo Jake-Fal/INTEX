@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import UserInfo, WaterEntry,FoodEntry,FoodItem,MealClass,Actuals,Goal
+from .models import UserInfo, WaterEntry,FoodEntry,FoodItem,Login,MealClass,Actuals,Goal
+
 
 # Register your models here.
 admin.site.register(UserInfo)

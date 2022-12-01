@@ -13,11 +13,47 @@
         
     </div>
 
-    <form action="" class = "entrybutton">
+    <form action="/addwater/" class = "entrybutton">
         <input type="submit" value="Add Water Entry" />
     </form>
     <div>
         <p>WATER TABLE:</p>
+        <table>
+            <thead>
+                <tr>
+                    {% for key in water|first %}
+                    {% if key != 'id' and key != 'UserID_id' %}
+                        <th>{{key}}</th>
+                    {% endif %}
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in water %}
+                <tr>
+                    {% for key,val in row.items %}
+                        {% if key == 'Amount' %}
+                            <td>{{ val }}L</td>
+                        {% elif key != 'id' and key != 'UserID_id'%}
+                            <td>{{ val }}</td>
+                        {% endif %}
+                    {% endfor %}
+                    <td>
+                        <form method = "post" action="/editwater/{{ row.id }}/">
+                            {% csrf_token %}
+                            <input type="submit" value="Edit"></input>
+                        </form>
+                    </td>
+                    <td>
+                        <form method = "post" action="/deletewater/{{ row.id }}/">
+                            {% csrf_token %}
+                            <input type="submit" value="Delete"></input>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 
 </div>
