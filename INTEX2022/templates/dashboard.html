@@ -94,7 +94,7 @@ const myChart = new Chart(ctx, {
         data:  {
             labels:  [{% for x in keys %} '{{x}}', {%endfor%}],
             datasets: [{
-                label: 'Your results',
+                label: 'Your nutrient results',
                 data: [{% for y in values %} {{y}}, {%endfor%}],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
@@ -131,7 +131,7 @@ const myChart = new Chart(ctx, {
         data:  {
             labels:  [{% for x in pkeys %} '{{x}}', {%endfor%}],
             datasets: [{
-                label: 'Your results',
+                label: 'Your water and protein results',
                 data: [{% for y in pvals %} {{y}}, {%endfor%}],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
@@ -171,3 +171,12 @@ const myChart = new Chart(ctx, {
 
 
 {% endblock %}
+
+<!--Actuals(
+	UserID INT NOT NULL references User,
+    sodiumIntake decimal(5,2),
+    potassiumIntake decimal(5,2),
+    phosphorus decimal(5,2),
+    protein decimal(5,2),
+    water decimal(5,2)
+);-->
