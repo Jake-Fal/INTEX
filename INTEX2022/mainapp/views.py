@@ -1,11 +1,11 @@
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from .funcs import searchAPI, getById, getList
 from .models import MealClass, FoodItem, FoodEntry, WaterEntry, UserInfo
 from .models import Actuals
 from .forms import LoginForm
-from .models import Login
+
 import pandas as pd
 import psycopg2
 import json
@@ -255,26 +255,50 @@ def displayjournalPageView(request) :
     }
     return render( request, 'displayjournal.html', context)
 
-def loginPageView(request) :
-    form = LoginForm
-    return render( request, 'login.html', {'form': form})
 
-
-def validatePage(request) :
-    return redirect(indexPageView)
-
- 
 def profilePageView(request) :
-    return render( request, 'profile.html')
+    UserInfo.objects.get(user = request.user.id).id
+    obj = get_object_or_404(UserInfo, pk = UserInfo.objects.get(user = request.user.id).id)
+    form = UserForm(request.POST or None, instance = obj)
+
+    # if form.is_valid:
+    #     form.save()
+    return render( request, 'profile.html', {'form':form})
+
+def updateProfile(request):
+    UserInfo.objects.get(user = request.user.id).id
+    obj = get_object_or_404(UserInfo, pk = UserInfo.objects.get(user = request.user.id).id)
+    userinfo = obj
+    if request.method == 'POST':
+        FirstName = request.POST['FirstName']
+        LastName = request.POST['LastName']
+        DOB = request.POST['DOB']
+        HeightFt = request.POST['HeightFt']
+        HeightIn = request.POST['HeightIn']
+        Weight = request.POST['Weight']
+        Sex = request.POST['Sex']
+
+        userinfo.FirstName = FirstName
+        userinfo.LastName = LastName
+        userinfo.DOB = DOB
+        userinfo.HeightFt = HeightFt
+        userinfo.HeightIn = HeightIn
+        userinfo.Weight = Weight
+        userinfo.Sex = Sex
+
+        userinfo.save()
+    return redirect(profilePageView)
 
 def register(request):
     if request.method == "POST" :
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
+            
+            # print(request.session['_auth_user_id'])
             # username = form.cleaned_data.get('username')
             # messages.success(request, f'Hi {username}, your account was created successfully')
-            return HttpResponseRedirect('/createuser')
+            return HttpResponseRedirect('/login/')
     else :
         form = UserCreationForm
 
@@ -286,7 +310,15 @@ def createuserPageView(request) :
         form = UserForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/createuser?submitted=True')
+            actualsEntry = Actuals()
+            actualsEntry.UserID = UserInfo.objects.get(user = request.user.id)
+            actualsEntry.Protein_g = 0
+            actualsEntry.Sodium_mg = 0
+            actualsEntry.Phosphorous_mg = 0
+            actualsEntry.Potassium_mg = 0
+            actualsEntry.Water_L = 0
+            actualsEntry.save()
+            return HttpResponseRedirect('/profile/')
     else:
         form = UserForm
         if 'submitted' in request.GET:
@@ -294,6 +326,12 @@ def createuserPageView(request) :
     form = UserForm
     return render( request, 'createuser.html', {'form': form, 'submitted':submitted})
 
+def login_redirect(request) :
+    try:
+        if UserInfo.objects.get(user = request.user.id) :
+            return HttpResponseRedirect('/journal/')
+    except :
+        return HttpResponseRedirect('/createuser/')
 
 def dashboardPageView2(request) :
     return render( request, 'dashboard.html')

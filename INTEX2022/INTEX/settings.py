@@ -50,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'mainapp.middleware.current_user.CurrentUserMiddleware',
 ]
 
 ROOT_URLCONF = 'INTEX.urls'
@@ -80,7 +81,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME':'kidney_health',
         'USER': 'postgres',
-        'PASSWORD': 'Andyman72599',
+        'PASSWORD': 'animelife',
         'HOST': 'localhost',
     }
 }
@@ -131,4 +132,5 @@ os.path.join(BASE_DIR, 'INTEX/static')]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-LOGIN_REDIRECT_URL = "dashboard"
+LOGIN_REDIRECT_URL = "redirect"
+LOGOUT_REDIRECT_URL = "index"

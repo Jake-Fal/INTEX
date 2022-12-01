@@ -9,11 +9,12 @@
         <h1>Login</h1>
 
         
-        <form method="post" action="/validate/">
+        <form method="post">
             {% csrf_token %}
             {{ form.as_p}}
 
-            <input type="submit"/>
+            <a class="current" href="{% url 'register' %}">Don't Have an Account? Create New Acccount</a>
+            <input type="submit" value="Login"/>
         </form>
     </div>
 </body>
