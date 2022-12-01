@@ -1,6 +1,6 @@
 from django.urls import path
 from django.contrib.auth import views as auth_view
-from .views import indexPageView, createuserPageView, journalPageView, loginPageView, profilePageView, navView, apiTest, dashboardPageView, displayjournalPageView, validatePage
+from .views import indexPageView, createuserPageView, journalPageView, loginPageView, profilePageView, navView, dashboardPageView, displayjournalPageView, validatePage
 
 from .views import indexPageView, createuserPageView, dashboardPageView, journalPageView, loginPageView, profilePageView, navView, searchFoodView,addFoodEntry, getAPIList, profilePageView, dashboardPageView, displayjournalPageView
 

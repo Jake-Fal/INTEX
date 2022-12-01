@@ -25,6 +25,9 @@ class User(models.Model):
  
     def __str__(self):
         return f'{self.FirstName} {self.LastName}'
+
+    def getHeight(self):
+        return f'{self.HeightFt}\'{self.HeightIn}\"'
 class Login(models.Model):
     userID = models.ForeignKey(User, on_delete= models.CASCADE)
     username = models.CharField(max_length=20, null=False)
