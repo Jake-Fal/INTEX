@@ -965,6 +965,14 @@ Overwrite some FlexSlider styles
   width: 200px;
 }
 
+/* tables */
+table {
+  border: 1px solid;
+  width: 100%;
+}
+
+
+
 
 
 
