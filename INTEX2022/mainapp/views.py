@@ -185,10 +185,7 @@ def getAPIList(request):
 
 def journalPageView(request) :
     meals = MealClass.objects.all()
-
-    context = {
-        'meals':meals
-    }
+    context = {'meals':meals}
 
     return render(request, 'journal.html', context)
 
@@ -201,7 +198,7 @@ def displayjournalPageView(request) :
     for i in foodEntries:
         rec = {}
         for key in dict(i):
-            if key in ['id', 'DateTime', 'NumServings']:
+            if key in ['id', 'NumServings']:
                 if key == 'NumServings':
                     rec[key] = float(dict(i)[key])
                 else:
@@ -313,9 +310,9 @@ def dashboardPageView(request):
     obj = get_object_or_404(UserInfo, pk = UserInfo.objects.get(user = request.user.id).id)
     try:
         connection = psycopg2.connect(user="postgres",
-                                    password="Broncos2025",
+                                    password="nacho",
                                     host="localhost",
-                                    port="5432",
+                                    port="5050",
                                     database="kidney_health")
         cursor = connection.cursor()
         postgreSQL_select_Query = f"select * from actuals inner join userinfo on userinfo.id = actuals.\"UserID_id\" where userinfo.id = {obj.id}"
