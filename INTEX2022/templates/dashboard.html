@@ -173,6 +173,11 @@ const myChart = new Chart(ctx, {
     {% if Potasium > 3000 %}
     <p>Alert: your potasium levels are higher than your health goal.</p>Choose apples or peaches instead of oranges, bananas or orange juice to lower your potassium intake.</p>
     {% endif%}
+    {% if male and Water >= 3.7%}
+    <p>Yay! You have reached your water Goal!</p>
+    {% elif Water >= 2.7 %}
+    <p>Yay! You have reached your water Goal!</p>
+    {% endif%}
 </div> 
     </div>    
 </div>    
