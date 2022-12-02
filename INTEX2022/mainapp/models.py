@@ -66,8 +66,6 @@ class WaterEntry(models.Model):
     UserID = models.ForeignKey(UserInfo,on_delete= models.DO_NOTHING)
     DateTime = models.CharField(max_length=20, null=False)
     Amount = models.DecimalField(max_digits=4,decimal_places=2,null=False)
-
- 
     class Meta:
         db_table = 'water_entry'
  
@@ -87,14 +85,14 @@ class Goal(models.Model):
 
 class Actuals(models.Model):
     UserID = models.ForeignKey(UserInfo, on_delete = models.DO_NOTHING, null=False)
-    Protein_g = models.DecimalField(max_digits=5,decimal_places=2,null=False)
-    Water_L = models.DecimalField(max_digits=5,decimal_places=2,null=False)
-    Sodium_mg = models.DecimalField(max_digits=5,decimal_places=2,null=False)
-    Potassium_mg = models.DecimalField(max_digits=5,decimal_places=2,null=False)
-    Phosphorous_mg = models.DecimalField(max_digits=5,decimal_places=2,null=False)
+    Protein_g = models.DecimalField(max_digits=8,decimal_places=2,null=False)
+    Water_L = models.DecimalField(max_digits=8,decimal_places=2,null=False)
+    Sodium_mg = models.DecimalField(max_digits=8,decimal_places=2,null=False)
+    Potassium_mg = models.DecimalField(max_digits=8,decimal_places=2,null=False)
+    Phosphorous_mg = models.DecimalField(max_digits=8,decimal_places=2,null=False)
  
     class Meta:
         db_table = 'actuals'
  
     def __str__(self):
-        return self.Phosphorous_mg, self.Potassium_mg, self.Water_L, self.Protein_g, self.Sodium_mg
+        return self.UserID.FirstName
