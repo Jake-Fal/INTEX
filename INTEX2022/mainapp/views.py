@@ -305,6 +305,7 @@ def dashboardPageView(request):
     pvals = []
     keys = []
     values = []
+    male = True
     obj = get_object_or_404(UserInfo, pk = UserInfo.objects.get(user = request.user.id).id)
     try:
         connection = psycopg2.connect(user="postgres",
@@ -370,8 +371,8 @@ def dashboardPageView(request):
          'Potasium': Potasium,
          'Phosphorus': Phosphorus,
          'Protein': Protein,
-         'Water': Water
-
+         'Water': Water,
+         'Gender': male
      }
 
     print(context)
