@@ -186,7 +186,11 @@ def getAPIList(request):
 def journalPageView(request) :
     meals = MealClass.objects.all()
 
-    return render(request, 'journal.html')
+    context = {
+        'meals':meals
+    }
+
+    return render(request, 'journal.html', context)
 
 def displayjournalPageView(request) :
     print(request.user)
@@ -308,7 +312,7 @@ def dashboardPageView(request):
     obj = get_object_or_404(UserInfo, pk = UserInfo.objects.get(user = request.user.id).id)
     try:
         connection = psycopg2.connect(user="postgres",
-                                    password="Broncos2025",
+                                    password="Andyman72599",
                                     host="localhost",
                                     port="5432",
                                     database="kidney_health")
