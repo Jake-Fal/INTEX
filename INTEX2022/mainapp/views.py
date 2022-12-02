@@ -150,84 +150,8 @@ def getAPIList(request):
 
 def journalPageView(request) :
     meals = MealClass.objects.all()
-    data = {}
-    pdata = {}
-    newvals = {}
-    npvals = {}
-    pkeys = []
-    pvals = []
-    keys = []
-    values = []
-    context = {
-         'keys': keys,
-         'values': values,
-         'data': data,
-         'pvals': pvals,
-         'pkeys': pkeys,
-         'meals': meals
-     }
-    try:
-        connection = psycopg2.connect(user="postgres",
-                                    password="Broncos2025",
-                                    host="localhost",
-                                    port="5432",
-                                    database="kidney_health")
-        cursor = connection.cursor()
-        postgreSQL_select_Query = "select * from mainapp_goal"
 
-        cursor.execute(postgreSQL_select_Query)
-        print("Selecting rows from mobile table using cursor.fetchall")
-        mobile_records = cursor.fetchall()
-
-        print("Print each row and it's columns values")
-
-        for row in mobile_records:
-            print("Id = ", row[0], )
-            print("Min_Sodium_mg = ", row[1])
-            print("Max_Sodium_mg  = ", row[2])
-            print("Min_Potassium_mg  = ", row[3])
-            print("Max_Potassium_mg  = ", row[4])
-            print("Min_Phosphorous_mg  = ", row[5])
-            print("Max_Phosphorous_mg  = ", row[6])
-            print("Protien_g  = ", row[7])
-            print("M_Water_L  = ", row[8])
-            print("F_Water_L  = ", row[9])
-
-        newvals = {'Min_Sodium_mg': row[1], 
-        "Max_Sodium_mg": row[2],
-        "Min_Potassium_mg": row[3],
-        "Max_Potassium_mg": row[4],
-        "Min_Phosphorous_mg": row[5],
-        "Max_Phosphorous_mg": row[6],
-        }
-
-        npvals = {"Protien_g": float(row[7]),
-        "M_Water_L": float(row[8]),
-        "F_Water_L": float(row[9])}
-    
-            
-
-
-
-    except (Exception, psycopg2.Error) as error:
-        print("Error while fetching data from PostgreSQL", error)
-
-    finally:
-        # closing database connection.
-        if connection:
-            cursor.close()
-            connection.close()
-            print("PostgreSQL connection is closed")
-    data.update(newvals)
-    pdata.update(npvals)
-    for key, value in data.items():
-        keys.append(key)
-        values.append(value)
-    for key, value in pdata.items():
-        pkeys.append(key)
-        pvals.append(value)
-
-    return render(request, 'journal.html', context)
+    return render(request, 'journal.html')
 
 def displayjournalPageView(request) :
     waterEntries = WaterEntry.objects.all().values()
@@ -334,8 +258,6 @@ def login_redirect(request) :
     except :
         return HttpResponseRedirect('/createuser/')
 
-def dashboardPageView2(request) :
-    return render( request, 'dashboard.html')
 
 def dashboardPageView(request):
     data = {}
@@ -346,44 +268,7 @@ def dashboardPageView(request):
     pvals = []
     keys = []
     values = []
-    context = {
-         'keys': keys,
-         'values': values,
-         'data': data,
-         'pvals': pvals,
-         'pkeys': pkeys
-
-     }
-    import psycopg2
-
-    # try:
-    #     connection = psycopg2.connect(user="postgres",
-    #                                 password="Broncos2025",
-    #                                 host="localhost",
-    #                                 port="5432",
-    #                                 database="kidney_health")
-    #     cursor = connection.cursor()
-    #     postgreSQL_select_Query = "select * from mainapp_goal"
-
-    #     cursor.execute(postgreSQL_select_Query)
-    #     print("Selecting rows from mobile table using cursor.fetchall")
-    #     mobile_records = cursor.fetchall()
-
-    #     print("Print each row and it's columns values")
-    #     for row in mobile_records:
-    #         print("Id = ", row[0], )
-    #         print("Model = ", row[1])
-    #         print("Price  = ", row[2], "\n")
-
-    # except (Exception, psycopg2.Error) as error:
-    #     print("Error while fetching data from PostgreSQL", error)
-
-    # finally:
-    #     # closing database connection.
-    #     if connection:
-    #         cursor.close()
-    #         connection.close()
-    #         print("PostgreSQL connection is closed")
+    obj = get_object_or_404(UserInfo, pk = UserInfo.objects.get(user = request.user.id).id)
     try:
         connection = psycopg2.connect(user="postgres",
                                     password="Broncos2025",
@@ -391,7 +276,7 @@ def dashboardPageView(request):
                                     port="5432",
                                     database="kidney_health")
         cursor = connection.cursor()
-        postgreSQL_select_Query = "select * from actuals inner join user on user.id = actuals.UserID_id"
+        postgreSQL_select_Query = f"select * from actuals inner join userinfo on userinfo.id = actuals.\"UserID_id\" where userinfo.id = {obj.id}"
 
         cursor.execute(postgreSQL_select_Query)
         print("Selecting rows from mobile table using cursor.fetchall")
@@ -400,21 +285,26 @@ def dashboardPageView(request):
         print("Print each row and it's columns values")
 
         for row in mobile_records:
-            print("Sodium = ", row[1])
-            print("Potassium  = ", row[2])
-            print("Phosphorous  = ", row[3])
-            print("Protien g/kg  = ", row[4])
-            print("Male Water L/Day  = ", row[5])
-            print("Female Water L/Day  = ", row[6])
+            print("Sodium = ", row[3])
+            print("Potassium  = ", row[4])
+            print("Phosphorous  = ", row[5])
+            print("Protein g/kg  = ", row[1])
+            print("Water L/Day  = ", row[2])
+            Sodium = row[3]
+            Potasium = row[4]
+            Phosphorus = row[5]
+            Protein = float(row[1])/(float(row[13])/float(2.205))
+            Water = float(row[2])
 
-        newvals = {'Sodium': row[1],
-        "Potassium": row[2],
-        "Phosphorous": row[3],
+        newvals = {'Sodium': row[3],
+        "Potassium": row[4],
+        "Phosphorous": row[5],
         }
 
-        npvals = {"Protien g/kg": float(row[4]),
-        "Male Water L/Day  = ": float(row[5]),
-        "Female Water L/Day  = ": float(row[6])}
+        npvals = {"Protien g/kg": Protein,
+        "Water L/Day": Water,}
+        print('Sodium: ', Sodium)
+        print('Protein: ', Protein)
     
     except (Exception, psycopg2.Error) as error:
         print("Error while fetching data from PostgreSQL", error)
@@ -433,7 +323,21 @@ def dashboardPageView(request):
     for key, value in pdata.items():
         pkeys.append(key)
         pvals.append(value)
+    context = {
+         'keys': keys,
+         'values': values,
+         'data': data,
+         'pvals': pvals,
+         'pkeys': pkeys,
+         'Sodium': Sodium,
+         'Potasium': Potasium,
+         'Phosphorus': Phosphorus,
+         'Protein': Protein,
+         'Water': Water
 
+     }
+
+    print(context)
     return render(request, 'dashboard.html', context)
 
 def navView(request):

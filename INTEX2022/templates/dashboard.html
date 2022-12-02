@@ -12,7 +12,7 @@
         <canvas id="aChart" width="40" height="30"></canvas>
         <canvas id="pChart" width="40" height="30"></canvas>
 
-
+<div>
 <script>
 const ctx = document.getElementById('myChart').getContext('2d');
 const myChart = new Chart(ctx, {
@@ -41,13 +41,6 @@ const myChart = new Chart(ctx, {
             borderWidth: 1
         }]
     },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
 });
 </script>
 <script>
@@ -55,7 +48,7 @@ const myChart = new Chart(ctx, {
     const yChart = new Chart(ct, {
         type: 'bar',
         data:  {
-            labels:  ['Protein (g)', 'Water(Male, L)','Water (Female, L)'],
+            labels:  ['Protein (g)', 'Water'],
             datasets: [{
                 label: '',
                 data: [0.6, 3.7, 2.7],
@@ -94,7 +87,7 @@ const myChart = new Chart(ctx, {
         data:  {
             labels:  [{% for x in keys %} '{{x}}', {%endfor%}],
             datasets: [{
-                label: 'Your nutrient results',
+                label: 'Your nutrient results (mg)',
                 data: [{% for y in values %} {{y}}, {%endfor%}],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
@@ -124,6 +117,7 @@ const myChart = new Chart(ctx, {
         }
     });
 </script>
+<div>
 <script>
     const ctp = document.getElementById('pChart').getContext('2d');
     const pChart = new Chart(ctp, {
@@ -161,7 +155,25 @@ const myChart = new Chart(ctx, {
         }
     });
 </script>
-    
+</div>
+</div>
+<div class="alerts">
+    {% if Sodium > 2300 %}
+    <p>Alert: your sodium levels are higher than your health goal.</p>
+    <p>Eating fresh food instead of preserved or fast food, will decrease your sodium levels.</p>
+    {% endif%}
+    {% if Protein > 0.6 %}
+    <p>Alert: your protein levels are higher than your health goal.</p>
+    <p>Eating too much protien will make your kidneys work harder than they should. We suggest eating smaller portions of protein-based foods such as Chicken, Fish, Meat, Eggs, Dairy, Beans, Nuts, and Grains.</p>
+    {% endif%}
+    {% if Phosphorus > 1000 %}
+    <p>Alert: your Phosphorus levels are higher than your health goal.</p>
+    <p>In the future, we suggest you replace dairy milk with rice milk to lower your Phosphorus levels.</p>
+    {% endif%}
+    {% if Potasium > 3000 %}
+    <p>Alert: your potasium levels are higher than your health goal.</p>Choose apples or peaches instead of oranges, bananas or orange juice to lower your potassium intake.</p>
+    {% endif%}
+</div> 
     </div>    
 </div>    
 
