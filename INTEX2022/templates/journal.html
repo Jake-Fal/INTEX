@@ -25,7 +25,7 @@
             Food Item: <input type="search" name="food" id="searchfood" hx-get="searchfood/" hx-trigger="keyup" hx-target="#results"/><br/>
             <div id='results'></div>
             <a href="/addfood/">Add New Food Item</a><br/>
-            Number of Servings: <input type='number' name="servings" value="0" min="0" max="10"/>
+            Number of Servings: <input type='number' name="servings" min="0" max="10" step=".1"/>
             <input type="submit"/>
         </form>
     </div>

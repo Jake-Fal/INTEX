@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
@@ -58,17 +59,27 @@ def submitFoodItem(request):
 
 def addFoodEntry(request):
     if request.method == 'POST':
+        currentUser = UserInfo.objects.get(user=request.user.id).id
+        
         user = request.user.id
         date = request.POST['EntryDate']
         meal = request.POST['meal']
         food = request.POST['foodID']
         servings = request.POST['servings']
 
+        actuals = Actuals.objects.get(UserID=currentUser)
+        foodInfo = FoodItem.objects.get(id=food)
+        actuals.Protein_g += foodInfo.Protein_g * Decimal(servings)
+        actuals.Phosphorous_mg += foodInfo.Phosphate_mg * Decimal(servings)
+        actuals.Potassium_mg += foodInfo.Potassium_mg * Decimal(servings)
+        actuals.Sodium_mg += foodInfo.Sodium_mg * Decimal(servings)
+        actuals.save()
+
         entry = FoodEntry()
         entry.UserID = UserInfo.objects.get(user=user)
         entry.DateTime = date
+        entry.FoodID = foodInfo
         entry.MealName = MealClass.objects.get(MealName=meal)
-        entry.FoodID = FoodItem.objects.get(id=food)
         entry.NumServings = servings
         entry.save()
 
@@ -82,6 +93,12 @@ def submitWaterEntry(request):
         userid = request.POST['userid']
         date = request.POST['EntryDate']
         amount = request.POST['amount']
+
+        currentUser = UserInfo.objects.get(user=request.user.id).id
+        actuals = Actuals.objects.get(UserID=currentUser)
+
+        actuals.Water_L += Decimal(amount)
+        actuals.save()
 
         waterEntry = WaterEntry()
         waterEntry.UserID = UserInfo.objects.get(user=request.user.id)
@@ -109,10 +126,28 @@ def submitWaterChanges(request, id):
     
 
 def deleteWaterEntry(request, id):
+    amount = WaterEntry.objects.get(id=id).Amount
+    currentUser = UserInfo.objects.get(user=request.user.id).id
+    actuals = Actuals.objects.get(UserID=currentUser)
+
+    actuals.Water_L -= Decimal(amount)
+    actuals.save()
+
     WaterEntry.objects.get(id=id).delete()
     return redirect(displayjournalPageView)
 
 def deleteFoodEntry(request, id):
+    currentUser = UserInfo.objects.get(user=request.user.id).id
+    actuals = Actuals.objects.get(UserID=currentUser)
+    entry = FoodEntry.objects.get(id=id)
+    food = entry.FoodID
+
+    actuals.Protein_g -= food.Protein_g * entry.NumServings
+    actuals.Phosphorous_mg -= food.Phosphate_mg * entry.NumServings
+    actuals.Potassium_mg -= food.Potassium_mg * entry.NumServings
+    actuals.Sodium_mg -= food.Sodium_mg * entry.NumServings
+    actuals.save()
+
     FoodEntry.objects.get(id=id).delete()
     return redirect(displayjournalPageView)
 
@@ -230,6 +265,8 @@ def journalPageView(request) :
     return render(request, 'journal.html', context)
 
 def displayjournalPageView(request) :
+    print(request.user)
+    currentUser = UserInfo.objects.get(user=request.user.id).id
     waterEntries = WaterEntry.objects.all().values()
     foodEntries = FoodEntry.objects.all().values()
     food = []
@@ -331,7 +368,7 @@ def login_redirect(request) :
     try:
         if UserInfo.objects.get(user = request.user.id) :
             return HttpResponseRedirect('/journal/')
-    except :
+    except:
         return HttpResponseRedirect('/createuser/')
 
 def dashboardPageView2(request) :
