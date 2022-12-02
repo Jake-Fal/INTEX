@@ -83,7 +83,7 @@ const myChart = new Chart(ctx, {
 <script>
     const cta = document.getElementById('aChart').getContext('2d');
     const aChart = new Chart(cta, {
-        type: 'bar',
+        type: 'doughnut',
         data:  {
             labels:  [{% for x in keys %} '{{x}}', {%endfor%}],
             datasets: [{
@@ -108,13 +108,6 @@ const myChart = new Chart(ctx, {
                 borderWidth: 1
             }],
         },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
     });
 </script>
 <div>
@@ -167,12 +160,20 @@ const myChart = new Chart(ctx, {
     <p>Eating too much protien will make your kidneys work harder than they should. We suggest eating smaller portions of protein-based foods such as Chicken, Fish, Meat, Eggs, Dairy, Beans, Nuts, and Grains.</p>
     {% endif%}
     {% if Phosphorus > 1000 %}
-    <p>Alert: your Phosphorus levels are higher than your health goal.</p>
+    <p>Alert: your phosphorus levels are higher than your health goal.</p>
     <p>In the future, we suggest you replace dairy milk with rice milk to lower your Phosphorus levels.</p>
     {% endif%}
     {% if Potasium > 3000 %}
     <p>Alert: your potasium levels are higher than your health goal.</p>Choose apples or peaches instead of oranges, bananas or orange juice to lower your potassium intake.</p>
     {% endif%}
+    {% if male%}
+        {%elif Water >= 3.7%}
+        <p>Yay! You have reached your water Goal!</p>
+    {%endif%}
+    {%if male == False%}
+        {%elif water >= 2.7%}
+        <p>Yay! You have reached your water Goal!</p>
+    {%endif%}
 </div> 
     </div>    
 </div>    
@@ -183,12 +184,3 @@ const myChart = new Chart(ctx, {
 
 
 {% endblock %}
-
-<!--Actuals(
-	UserID INT NOT NULL references User,
-    sodiumIntake decimal(5,2),
-    potassiumIntake decimal(5,2),
-    phosphorus decimal(5,2),
-    protein decimal(5,2),
-    water decimal(5,2)
-);-->

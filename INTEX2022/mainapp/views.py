@@ -186,6 +186,7 @@ def getAPIList(request):
 def journalPageView(request) :
     meals = MealClass.objects.all()
     context = {'meals':meals}
+
     return render(request, 'journal.html', context)
 
 def displayjournalPageView(request) :
@@ -305,6 +306,7 @@ def dashboardPageView(request):
     pvals = []
     keys = []
     values = []
+    male = True
     obj = get_object_or_404(UserInfo, pk = UserInfo.objects.get(user = request.user.id).id)
     try:
         connection = psycopg2.connect(user="postgres",
@@ -360,6 +362,8 @@ def dashboardPageView(request):
     for key, value in pdata.items():
         pkeys.append(key)
         pvals.append(value)
+    if row[14] == 'W':
+        male = False
     context = {
          'keys': keys,
          'values': values,
@@ -370,8 +374,8 @@ def dashboardPageView(request):
          'Potasium': Potasium,
          'Phosphorus': Phosphorus,
          'Protein': Protein,
-         'Water': Water
-
+         'Water': Water,
+         'Gender': male
      }
 
     print(context)
