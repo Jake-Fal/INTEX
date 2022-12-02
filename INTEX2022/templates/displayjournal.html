@@ -64,7 +64,7 @@
             <thead>
                 <tr>
                     {% for key in water|first %}
-                    {% if key != 'id' and key != 'UserID_id' and key != 'Date' %}
+                    {% if key != 'id' and key != 'UserID_id' and key != 'DateTime' %}
                         <th>{{key}}</th>
                     {% endif %}
                     {% endfor %}
@@ -76,7 +76,7 @@
                     {% for key,val in row.items %}
                         {% if key == 'Amount' %}
                             <td>{{ val }}L</td>
-                        {% elif key != 'id' and key != 'UserID_id' and key != 'Date'%}
+                        {% elif key != 'id' and key != 'UserID_id' and key != 'DateTime'%}
                             <td>{{ val }}</td>
                         {% endif %}
                     {% endfor %}

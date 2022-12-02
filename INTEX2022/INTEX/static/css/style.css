@@ -971,6 +971,18 @@ table {
   width: 100%;
 }
 
+.chartscontainer {
+  display: flex;
+  flex-wrap: wrap;
+  
+}
+
+.charts {
+
+  width: 50%;
+}
+
+
 
 
 
