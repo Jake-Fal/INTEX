@@ -313,7 +313,7 @@ def dashboardPageView(request):
     obj = get_object_or_404(UserInfo, pk = UserInfo.objects.get(user = request.user.id).id)
     try:
         connection = psycopg2.connect(user="postgres",
-                                    password="Andyman72599",
+                                    password="Broncos2025",
                                     host="localhost",
                                     port="5432",
                                     database="kidney_health")
@@ -365,6 +365,8 @@ def dashboardPageView(request):
     for key, value in pdata.items():
         pkeys.append(key)
         pvals.append(value)
+    if row[14] == 'W':
+        male = False
     context = {
          'keys': keys,
          'values': values,
